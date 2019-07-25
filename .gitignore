@@ -1,0 +1,11 @@
+##################
+*.csproj
+*.sln
+*.jpg
+
+#####################
+/Library/
+Builds/
+.vs/
+Temp/
+obj/
