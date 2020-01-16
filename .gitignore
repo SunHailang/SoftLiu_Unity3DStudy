@@ -7,6 +7,6 @@
 /Library/
 /Builds/
 .vs/
-Temp/
+/Temp/
 obj/
 /Logs/
