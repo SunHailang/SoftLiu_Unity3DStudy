@@ -36,7 +36,7 @@ namespace SoftLiu.Servers
 
         public void GetServerTime(Action<GetServerTimeResponse> onGetServerTime)
         {
-            string serverTimeUrl = "https://www.baidu.com/";
+            string serverTimeUrl = "https://umc-common.upaidui.com/servertime";
             UnityWebRequest request = UnityWebRequest.Get(serverTimeUrl);
             Action<string, string> onGetServerTimeResponseInternal = (string errorStr, string response) =>
             {

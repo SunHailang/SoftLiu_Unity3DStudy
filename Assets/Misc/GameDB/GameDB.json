@@ -1,0 +1,11 @@
+{
+  "PlayerInitData": [
+    {
+      "m_key": "player",
+      "m_gems": 5,
+      "m_coins": 0,
+      "m_tickets": 0,
+      "m_pearls": 0
+    }
+  ]
+}

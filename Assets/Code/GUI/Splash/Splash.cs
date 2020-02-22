@@ -57,8 +57,9 @@ public class Splash : MonoBehaviour
             }
         });
 
-        SaveFacade.Instance.Init();
+        //SaveFacade.Instance.Init();
     }
+
 
     IEnumerator get(string url)
     {
