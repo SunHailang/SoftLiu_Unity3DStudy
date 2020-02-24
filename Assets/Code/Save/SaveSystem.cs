@@ -83,13 +83,20 @@ namespace SoftLiu.Save
             object floatObj = GetObject(key, platformSpecific);
 
             return floatObj != null ? Convert.ToSingle(floatObj) : defaultValue;
-        }
-
-        protected double GetDouble(string key, double defaultValue = 0, bool platformSpecific = false)
-        {
-            object doubleObj = GetObject(key, platformSpecific);
-
-            return doubleObj != null ? Convert.ToDouble(doubleObj) : defaultValue;
+        }
+
+
+
+        protected double GetDouble(string key, double defaultValue = 0, bool platformSpecific = false)
+
+        {
+
+            object doubleObj = GetObject(key, platformSpecific);
+
+
+
+            return doubleObj != null ? Convert.ToDouble(doubleObj) : defaultValue;
+
         }
 
         protected bool GetBool(string key, bool defaultValue = false, bool platformSpecific = false)
@@ -178,11 +185,16 @@ namespace SoftLiu.Save
         protected void SetFloat(string key, float value, bool platformSpecific = false)
         {
             SetObject(key, value, platformSpecific);
-        }
-
-        protected void SetDouble(string key, double value, bool platformSpecific = false)
-        {
-            SetObject(key, value, platformSpecific);
+        }
+
+
+
+        protected void SetDouble(string key, double value, bool platformSpecific = false)
+
+        {
+
+            SetObject(key, value, platformSpecific);
+
         }
 
         protected void SetBool(string key, bool value, bool platformSpecific = false)
