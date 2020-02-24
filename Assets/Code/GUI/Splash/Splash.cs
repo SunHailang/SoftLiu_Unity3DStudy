@@ -45,6 +45,11 @@ public class Splash : MonoBehaviour
         //DateTime date = Convert.ToDateTime(t3);
         //date = date.ToLocalTime();
         //Debug.Log(date.ToString("yyyy/MM/dd HH:mm:ss"));
+
+        GameObject tex = transform.Find("Button/Text").gameObject;
+        Debug.Log(tex.name);
+
+        SaveFacade.Instance.Init();
     }
 
     public void OnClick()

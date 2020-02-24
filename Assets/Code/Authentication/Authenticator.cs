@@ -25,8 +25,10 @@ namespace SoftLiu.Authentication
             m_deviceToken = new DeviceToken();
             if (m_user == null)
             {
-                m_user = new User();
+                m_user = new User();                
                 m_user.Load();
+                m_user.saveID = m_deviceToken.deviceToken;
+                m_user.Save();
             }
         }
     }
