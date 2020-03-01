@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Splash.unity
+    path: Assets/Scenes/SplashLoader.unity
     guid: f7d44600152e4c14cbc394ded38be950
+  - enabled: 1
+    path: Assets/Scenes/DragDropTest.unity
+    guid: b6d5500ffcf5729439100006f1a40cea
   m_configObjects: {}
