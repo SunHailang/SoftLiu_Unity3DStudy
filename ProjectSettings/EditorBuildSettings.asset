@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScreenAdaptation.unity
     guid: 73e3896aa7eb31742a3d131334343aaa
+  - enabled: 1
+    path: Assets/Scenes/Common3D.unity
+    guid: 1e6463beae02c8c49a76b414f0c62fbb
   m_configObjects: {}

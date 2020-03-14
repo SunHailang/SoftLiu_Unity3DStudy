@@ -1,0 +1,2 @@
+KEY,Chinese
+STARING_GAME_NAME,孙海浪

@@ -18,7 +18,7 @@ namespace SoftLiu.Servers
             m_requestList.Clear();
         }
 
-        public void Update()
+        public void OnUpdate()
         {
             for (int i = m_requestList.Count - 1; i >= 0; i--)
             {
