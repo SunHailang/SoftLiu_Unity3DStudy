@@ -821,7 +821,11 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
+<<<<<<< HEAD
   m_SizeDelta: {x: -2, y: 2}
+=======
+  m_SizeDelta: {x: 0, y: 2}
+>>>>>>> dev
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &805452999
 MonoBehaviour:
@@ -836,7 +840,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_width: 0
+<<<<<<< HEAD
   m_height: 0
+=======
+  m_height: -2
+  m_type: 1
+>>>>>>> dev
 --- !u!1 &896343090
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,7 +884,11 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -150}
+<<<<<<< HEAD
   m_SizeDelta: {x: 600, y: 166.40002}
+=======
+  m_SizeDelta: {x: 600, y: 180}
+>>>>>>> dev
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &896343092
 MonoBehaviour:
@@ -926,7 +939,11 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
+<<<<<<< HEAD
   m_fontSize: 166.4
+=======
+  m_fontSize: 180
+>>>>>>> dev
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
