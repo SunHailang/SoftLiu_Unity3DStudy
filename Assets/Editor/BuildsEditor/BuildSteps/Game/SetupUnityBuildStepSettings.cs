@@ -11,19 +11,19 @@ namespace SoftLiu.Build
             {
                 SoftLiuBuildTarget.iOS, new Dictionary<BuildType, string>
                 {
-                    {BuildType.Development,"ENABLE_LOG;" },
-                    {BuildType.Preproduction,"PREPRODUCTION;ENABLE_LOG;" },
-                    {BuildType.Production,"PRODUCTION;ENABLE_LOG;" },
-                    {BuildType.Marketing,";" }
+                    {BuildType.Development, "ENABLE_LOG;"},
+                    {BuildType.Preproduction, "PREPRODUCTION;ENABLE_LOG;"},
+                    {BuildType.Production, "PRODUCTION;"},
+                    {BuildType.Marketing, ";"}
                 }
             },
             {
                 SoftLiuBuildTarget.Android, new Dictionary<BuildType, string>
                 {
-                    {BuildType.Development,"ENABLE_LOG;" },
-                    {BuildType.Preproduction,"PREPRODUCTION;ENABLE_LOG;" },
-                    {BuildType.Production,"PRODUCTION;ENABLE_LOG;" },
-                    {BuildType.Marketing,";" }
+                    {BuildType.Development, "ENABLE_LOG;"},
+                    {BuildType.Preproduction, "PREPRODUCTION;ENABLE_LOG;"},
+                    {BuildType.Production, "PRODUCTION;"},
+                    {BuildType.Marketing, ";"}
                 }
             }
         };

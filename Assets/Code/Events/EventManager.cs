@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using SoftLiu.Utilities;
 
-namespace SoftLiu.Events
+namespace SoftLiu.Event
 {
     /// <summary>
     ///     Manages global events for application flow. 
