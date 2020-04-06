@@ -7,6 +7,30 @@ namespace SoftLiu.Plugins.Native
 {
     public class NativeImplementationAndroid : INativeImplementation
     {
+        private AndroidJavaObject m_javaActivity;
+        private AndroidJavaObject m_javaNative;
+
+        public NativeImplementationAndroid()
+        {
+            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            if (jc == null)
+            {
+                Debug.LogError("Could not find class com.unity3d.player.UnityPlayer!");
+            }
+
+            // find the plugin instance
+            m_javaActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            if (m_javaActivity == null)
+            {
+                Debug.LogError("Could not find currentActivity!");
+            }
+
+            using (var nativeClass = new AndroidJavaClass("com.softliu.hlsun.SoftLiuNative"))
+            {
+                m_javaNative = nativeClass.CallStatic<AndroidJavaObject>("Init", m_javaActivity);
+            }
+        }
+
         public string BackupGetAuthCredentials(string key)
         {
             throw new NotImplementedException();

@@ -17,7 +17,13 @@ namespace SoftLiu.Plugins.Native
 
         static NativeBinding()
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            m_implementation = new NativeImplementationAndroid();
+#elif UNITY_IOS && !UNITY_EDITOR
+            m_implementation = new NativeImplementationIOS();
+#else
             m_implementation = new NativeImplementationEditor();
+#endif
         }
     }
 }
