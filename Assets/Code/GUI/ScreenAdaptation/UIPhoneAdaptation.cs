@@ -30,4 +30,10 @@ public class UIPhoneAdaptation : MonoBehaviour
         m_rectTransform.sizeDelta = new Vector2(-m_width, -m_height);
     }
 
+    [OnInspectorGUI]
+    private void OnInspectorGUI()
+    {
+
+    }
+
 }
