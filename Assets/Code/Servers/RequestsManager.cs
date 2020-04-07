@@ -36,24 +36,23 @@ namespace SoftLiu.Servers
 
         public void GetServerTime(Action<GetServerTimeResponse> onGetServerTime)
         {
-            string serverTimeUrl = "https://umc-common.upaidui.com/servertime";
+            string serverTimeUrl = "https://baidu.com";
             UnityWebRequest request = UnityWebRequest.Get(serverTimeUrl);
-            Action<string, string> onGetServerTimeResponseInternal = (string errorStr, string response) =>
+            request.timeout = 15;
+            Action<string, string, long> onGetServerTimeResponseInternal = (string errorStr, string response, long responseCode) =>
             {
-                bool result = true;
                 if (string.IsNullOrEmpty(errorStr))
                 {
                     Dictionary<string, string> headers = request.GetResponseHeaders();
                     if (headers.ContainsKey("Date"))
                     {
                         string time = headers["Date"];
-                        result = false;
-                        onGetServerTime(new GetServerTimeResponse(time, result));
+                        onGetServerTime(new GetServerTimeResponse(time, null));
                     }
                 }
-                if (result)
+                else
                 {
-                    onGetServerTime(new GetServerTimeResponse(errorStr, true));
+                    onGetServerTime(new GetServerTimeResponse(null, errorStr));
                 }
             };
             m_requestList.Add(new RequestHandle(request, onGetServerTimeResponseInternal));

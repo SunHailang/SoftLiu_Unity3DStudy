@@ -28,14 +28,14 @@ public class Splash : MonoBehaviour
     float m_frame = 0;
     private void Update()
     {
-
+        RequestsManager.Instance.OnUpdate();
     }
 
     public void OnClick()
     {
         RequestsManager.Instance.GetServerTime((response) =>
         {
-            if (!response.error)
+            if (string.IsNullOrEmpty(response.error))
             {
                 Debug.Log(response.response.unixTimestamp);
                 Debug.Log(Time.unscaledTime);
@@ -54,6 +54,10 @@ public class Splash : MonoBehaviour
                     }
 
                 }, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            }
+            else
+            {
+                Debug.LogError("GetServerTime Error: " + response.error);
             }
         });
     }

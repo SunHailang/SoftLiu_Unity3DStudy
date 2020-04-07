@@ -8,10 +8,10 @@ namespace SoftLiu.Servers
 {
     public class RequestHandle
     {
-        public Action<string, string> onFinish;
+        public Action<string, string, long> onFinish;
         public UnityWebRequest request;
 
-        public RequestHandle(UnityWebRequest request, Action<string, string> onFinish)
+        public RequestHandle(UnityWebRequest request, Action<string, string, long> onFinish)
         {
             this.request = request;
             this.onFinish = onFinish;
@@ -23,7 +23,7 @@ namespace SoftLiu.Servers
             {
                 if (onFinish != null)
                 {
-                    onFinish(request.error, request.downloadHandler.text);
+                    onFinish(request.error, request.downloadHandler.text, request.responseCode);
                     onFinish = null;
                 }
                 return true;

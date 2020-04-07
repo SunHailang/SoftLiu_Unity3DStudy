@@ -48,22 +48,22 @@ namespace SoftLiu.Plugins.Native
 
         public string GetAdvertisingIdentifier()
         {
-            throw new NotImplementedException();
+            return m_javaNative.Call<string>("GetAdvertisingIdentifier");
         }
 
         public long GetAvailableDeviceMemory()
         {
-            throw new NotImplementedException();
+            return m_javaNative.Call<long>("GetAvailableDeviceMemory");
         }
 
         public string GetBundleVersion()
         {
-            throw new NotImplementedException();
+            return m_javaNative.Call<string>("GetBundleVersion");
         }
 
         public string GetCellularCountryCode()
         {
-            throw new NotImplementedException();
+            return m_javaNative.Call<string>("GetCellularCountryCode");
         }
 
         public string GetCellularNetworkType()
@@ -88,12 +88,12 @@ namespace SoftLiu.Plugins.Native
 
         public string GetConnectionType()
         {
-            throw new NotImplementedException();
+            return m_javaNative.CallStatic<string>("GetConnectionType");
         }
 
         public long GetDeviceMemoryThreshold()
         {
-            throw new NotImplementedException();
+            return m_javaNative.Call<long>("GetDeviceMemoryThreshold");
         }
 
         public string GetDeviceName()
@@ -103,12 +103,12 @@ namespace SoftLiu.Plugins.Native
 
         public string GetDocumentsDirectory()
         {
-            throw new NotImplementedException();
+            return m_javaNative.Call<string>("GetDocumentsDirectory");
         }
 
         public string GetExpansionFileCRC()
         {
-            throw new NotImplementedException();
+            return m_javaNative.CallStatic<string>("GetExtensionFileCRC");
         }
 
         public string GetExpansionFilePath()
@@ -153,22 +153,51 @@ namespace SoftLiu.Plugins.Native
 
         public float GetOSVersion()
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var version = new AndroidJavaClass("android.os.Build$VERSION"))
+                {
+                    return version.GetStatic<int>("SDK_INT");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Could not get android GetOSVersion: " + e.ToString());
+            }
+            return 0;
         }
-
+        private string m_cachedDataPath;
         public string GetPersistentDataPath()
         {
-            throw new NotImplementedException();
+            if (Application.platform != RuntimePlatform.Android)
+            {
+                return Application.persistentDataPath;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(m_cachedDataPath))
+                {
+                    m_cachedDataPath = m_javaNative.CallStatic<string>("GetExternalStorageLocation");
+
+                    // In case the path cannot be retrieved from Android, use Unity's one
+                    if (string.IsNullOrEmpty(m_cachedDataPath))
+                    {
+                        m_cachedDataPath = Application.persistentDataPath;
+                    }
+                }
+
+                return m_cachedDataPath;
+            }
         }
 
         public string GetUniqueUserID()
         {
-            throw new NotImplementedException();
+            return m_javaNative.Call<string>("GetAndroidID");
         }
 
         public long GetUsedHeapMemory()
         {
-            throw new NotImplementedException();
+            return m_javaNative.Call<long>("GetUsedHeapMemory");
         }
 
         public string GetUserCountryISO()
@@ -213,7 +242,7 @@ namespace SoftLiu.Plugins.Native
 
         public bool IsTVDevice()
         {
-            throw new NotImplementedException();
+            return m_javaNative.CallStatic<bool>("IsAndroidTVDevice");
         }
 
         public void LoadCredentialsFromDevice()
@@ -248,7 +277,7 @@ namespace SoftLiu.Plugins.Native
 
         public void ToggleSpinner(bool enable, float x = 1, float y = 0.99F)
         {
-            throw new NotImplementedException();
+            m_javaNative.Call("ToggleSpinner", enable, x, y);
         }
 
         public void TryShowPermissionExplanation(string[] permissions, string messageTitle, string messageInfo)

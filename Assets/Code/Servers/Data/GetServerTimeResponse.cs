@@ -20,13 +20,14 @@ public class GetServerTimeResponse
     [SerializeField]
     public GetServerTimeResponseInternal response;
 
-    public bool error;
+    public string error;
+    
 
-    public GetServerTimeResponse(string response, bool errorCode)
+    public GetServerTimeResponse(string response, string error)
     {
         //解析 回调
-        this.error = errorCode;
-        if (!this.error)
+        this.error = error;
+        if (string.IsNullOrEmpty(this.error))
         {
             try
             {
