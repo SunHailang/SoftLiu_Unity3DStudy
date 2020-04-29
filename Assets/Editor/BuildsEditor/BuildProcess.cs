@@ -28,8 +28,13 @@ public static class BuildProcess
         SetupBuildType();
 
         m_steps = new List<IBuildStep>();
+        m_steps.Add(new EditorCleanStep());
         m_steps.Add(new RemoveUnusedAndroidArtAssets());
         m_steps.Add(new CreateAndStripLanguagesBuildStep());
+        m_steps.Add(new SetupUnityBuildStep());
+        m_steps.Add(new BuildVersionStep());
+        m_steps.Add(new PlayerBuildStep());
+        m_steps.Add(new PostBuildStep());
     }
 
     public static string GetBuildPath(BuildTarget target, BuildType type, bool fromJenkins = false)
@@ -48,7 +53,6 @@ public static class BuildProcess
                 break;
         }
         path += GetBuildOutputName(target, type);
-        // To prevent unity throwing exception on 5.6+
         string absolutePath = Path.GetFullPath(path);
         return absolutePath;
     }
@@ -94,7 +98,7 @@ public static class BuildProcess
         }
         catch (System.Exception e)
         {
-            throw e;
+            Debug.LogError("Build Process Excute Error: " + e.Message);
         }
         finally
         {

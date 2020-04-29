@@ -28,9 +28,8 @@ namespace SoftLiu.AssetBundles
                 if (m_instance == null)
                 {
 #if (ASSETBUNDLES_LEVELS) && (UNITY_IOS || UNITY_ANDROID || UNITY_EDITOR)
-                    m_instance = new AssetBundleManagerMobile();
-#else
-                    m_instance = new AssetBundleManagerNull();
+
+
 #endif
                 }
                 return m_instance;

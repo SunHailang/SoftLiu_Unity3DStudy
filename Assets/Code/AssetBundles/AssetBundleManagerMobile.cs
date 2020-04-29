@@ -310,60 +310,7 @@ namespace SoftLiu.AssetBundles
 
         public void GetPlatformNameAndBundleURL()
         {
-            string platform = "";
-#if UNITY_EDITOR
-            platform = "StandaloneWindows64";
-            if (!SystemInfo.operatingSystem.Contains("Win"))
-            {
-                platform = "StandaloneOSXUniversal";
-            }
-            //editor - need to manually change name & branch for server url
-            //string currentJenkinsBuildName = "EconomyRebalance";// "2.7.0";
-            //string currentJenkinsWorkspaceBranch = "feature/EconomyRebalance";// "release/v2.7.0";
-            //BundleServerURL = "http://lcy-mac-build02:8080/job/HungrySharkWorld%20-%20" + currentJenkinsBuildName + "%20-%20Editor%20Development%20Bundles/ws/" + currentJenkinsWorkspaceBranch + "/AssetBundles";
 
-            //  Asset bundles for editor are now hosted on AWS as well
-            //https://s3.amazonaws.com/hungrysharkworld/development/AssetBundles/editor/StandaloneOSXUniversal/Development/3.1.99/
-            BundleServerURL = "https://s3.amazonaws.com/hungrysharkworld/development/AssetBundles/editor/" + platform + "/Development/" + Application.version + "/";
-
-
-#else
-            //not editor
-#if UNITY_ANDROID
-            platform = "Android";
-#elif UNITY_IOS
-            platform = "iOS";
-#endif
-
-
-            string key = Definitions.AssetBundleOptions.KeyDevelopment_url;
-#if PREPRODUCTION
-            key = Definitions.AssetBundleOptions.KeyPreproduction_url;
-#elif PRODUCTION
-            key = Definitions.AssetBundleOptions.KeyProduction_url;
-#endif
-
-            Definitions.AssetBundleOptions assetBundleOptions = GameDataManager.Instance.gameDB.GetItem<Definitions.AssetBundleOptions>(key);
-            BundleServerURL = assetBundleOptions.value + "/" + platform + "/" + Application.version;
-
-#if !PRODUCTION
-            //non prod builds use the p4 number
-            BundleServerURL = BundleServerURL + "/" + P4Revision.P4ChangeListNumber + "/";
-#elif UNITY_IOS
-            //prod builds use the bundle version set in the gameDB
-            Definitions.AssetBundleOptions prod_version = GameDataManager.Instance.gameDB.GetItem<Definitions.AssetBundleOptions>(Definitions.AssetBundleOptions.KeyIOSProdVersion);
-            BundleServerURL = BundleServerURL + "/" + prod_version.value + "/";
-#elif UNITY_ANDROID
-            //prod builds use the bundle version set in the gameDB
-            Definitions.AssetBundleOptions prod_version = GameDataManager.Instance.gameDB.GetItem<Definitions.AssetBundleOptions>(Definitions.AssetBundleOptions.KeyAndroidProdVersion);
-            BundleServerURL = BundleServerURL + "/" + prod_version.value + "/";
-#endif
-
-
-#endif //end of: not editor
-
-
-            Debug.Log("BundleServerURL: " + BundleServerURL);
         }
 
         public void Update()

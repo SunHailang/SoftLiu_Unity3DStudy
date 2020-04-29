@@ -67,36 +67,25 @@ namespace SoftLiu.Save
         protected int GetInt(string key, int defaultValue = 0, bool platformSpecific = false)
         {
             object intObj = GetObject(key, platformSpecific);
-
             return intObj != null ? Convert.ToInt32(intObj) : defaultValue;
         }
 
         protected string GetString(string key, string defaultValue = "", bool platformSpecific = false)
         {
             object stringObj = GetObject(key, platformSpecific);
-
             return stringObj != null ? Convert.ToString(stringObj) : defaultValue;
         }
 
         protected float GetFloat(string key, float defaultValue = 0, bool platformSpecific = false)
         {
             object floatObj = GetObject(key, platformSpecific);
-
             return floatObj != null ? Convert.ToSingle(floatObj) : defaultValue;
         }
 
-
-
         protected double GetDouble(string key, double defaultValue = 0, bool platformSpecific = false)
-
         {
-
             object doubleObj = GetObject(key, platformSpecific);
-
-
-
             return doubleObj != null ? Convert.ToDouble(doubleObj) : defaultValue;
-
         }
 
         protected bool GetBool(string key, bool defaultValue = false, bool platformSpecific = false)

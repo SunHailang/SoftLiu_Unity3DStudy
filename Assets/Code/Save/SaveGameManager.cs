@@ -141,7 +141,8 @@ namespace SoftLiu.Save
             SaveData save = new SaveData(saveID);
             Func<LoadState> loadSave = null;
 
-            loadSave = delegate () {
+            loadSave = delegate ()
+            {
                 LoadState loadResult = save.Load();
 
                 switch (loadResult)
@@ -192,15 +193,12 @@ namespace SoftLiu.Save
                                 }
                             }
                         }
-
                         break;
                 }
-
                 return loadResult;
             };
 
             LoadState result = loadSave();
-
             Action loadSystems = delegate ()
             {
                 if (result == LoadState.OK)
@@ -218,61 +216,42 @@ namespace SoftLiu.Save
             switch (result)
             {
                 case LoadState.OK:
-
                     //Now need to check game systems can load it!
                     bool upgraded = false;
                     result = UpgradeSystems(save, out upgraded);
-
                     save.Version = m_version;
-
-
                     //TODO only save on upgrade
-
                     if (result == LoadState.OK && upgraded)
-
                     {
-
                         SaveToDisk();
-
                     }
-
                     loadSystems();
                     break;
                 case LoadState.NotFound:
                     Debug.Log("SaveGameManager (LoadSave) :: No save found! Creating new save!");
                     //Create a new save
                     result = LoadState.OK;
-
                     loadSystems();
-
                     save.Version = m_version;
-
                     if (result == LoadState.OK)
                     {
                         save.Save();
                     }
-
                     break;
                 default:
                     loadSystems();
                     m_savingEnabled = false;
                     break;
             }
-
-
             loadedData = save;
-
-
             return result;
         }
         private LoadState LoadSystems(SaveData saveData)
         {
             LoadState state = LoadState.OK;
-
             try
             {
                 ClearSystems();
-
                 foreach (KeyValuePair<string, SaveSystem> pair in m_saveSystems)
                 {
                     pair.Value.data = saveData;
@@ -283,30 +262,22 @@ namespace SoftLiu.Save
             {
                 state = LoadState.Corrupted;
             }
-
             return state;
         }
 
         private LoadState UpgradeSystems(SaveData saveData, out bool upgraded)
         {
             LoadState state = LoadState.OK;
-
             upgraded = false;
-
             try
             {
                 ClearSystems();
-
                 foreach (KeyValuePair<string, SaveSystem> pair in m_saveSystems)
                 {
                     pair.Value.data = saveData;
-
                     if (pair.Value.Upgrade())
-
                     {
-
                         upgraded = true;
-
                     }
                 }
             }
@@ -314,7 +285,6 @@ namespace SoftLiu.Save
             {
                 state = LoadState.Corrupted;
             }
-
             return state;
         }
 
@@ -334,18 +304,13 @@ namespace SoftLiu.Save
             {
                 case ConflictResult.Cloud:
                     Debug.Log("SaveGameManager (ResolveConflict) :: Resolving conflict with cloud save!");
-
                     if (OverrideLocalSave(cloudSave, localSave))
                     {
                         m_comparator.ReconcileData(localSave, cloudSave);
-
                         cloudSave.Save();
-
                         cloudState = LoadSystems(cloudSave);
-
                         if (cloudState == LoadState.OK)
                         {
-
                             m_saveData = cloudSave;
                             m_syncCompleteCallback(null, SyncState.Successful);
                         }
@@ -353,8 +318,6 @@ namespace SoftLiu.Save
                         {
                             //Reset to local
                             LoadSystems(localSave);
-
-
                             m_saveData = localSave;
                             //TODO may need more specific errors
                             m_syncCompleteCallback(new SyncError("Failed to load resolved cloud save", ErrorCodes.SaveError), SyncState.Error);
@@ -367,13 +330,9 @@ namespace SoftLiu.Save
                     break;
                 case ConflictResult.Local:
                     Debug.Log("SaveGameManager (ResolveConflict) :: Resolving conflict with local save!");
-
                     m_comparator.ReconcileData(localSave, cloudSave);
-
                     localSave.Save();
-
                     LoadState localState = LoadSystems(localSave);
-
                     if (localState == LoadState.OK)
                     {
                         UploadSave(m_syncUser, localSave, delegate (Error error)
@@ -400,7 +359,6 @@ namespace SoftLiu.Save
 
                 case ConflictResult.ForceCloud:
                     SyncError forceCloudError = null;
-
                     // Make sure we reset force override as otherwise user save file will get overriden again next time
                     // If the flag doesn't exist (upgrading from old save?), just ignore the exception
                     try
@@ -412,7 +370,6 @@ namespace SoftLiu.Save
                     {
                         Debug.LogException(e);
                     }
-
                     if (OverrideLocalSave(cloudSave, localSave))
                     {
                         cloudSave.Save();
@@ -439,7 +396,6 @@ namespace SoftLiu.Save
                         m_saveData = localSave;
                         forceCloudError = new SyncError("Failed to Override Local Save", ErrorCodes.SaveError);
                     }
-
                     // Upload the new save to cloud to delete forceOverride flag
                     UploadSave(m_syncUser, m_saveData, delegate (Error error)
                     {
@@ -459,10 +415,8 @@ namespace SoftLiu.Save
         private bool OverrideLocalSave(SaveData cloudSave, SaveData localSave)
         {
             bool successful = false;
-
             //Try save the cloud save
             SaveState state = cloudSave.Save(false);
-
             if (state == SaveState.OK)
             {
                 if (cloudSave.Load() == LoadState.OK)
@@ -470,26 +424,20 @@ namespace SoftLiu.Save
                     successful = true;
                 }
             }
-
             //If cloud save failed save the local again
             if (!successful)
             {
                 localSave.Save();
             }
-
             return successful;
         }
-
         public SaveState CreateNewSave(User user)
         {
             string saveID = !string.IsNullOrEmpty(user.saveID) ? user.saveID : LocalSaveID;
-
             m_saveData = new SaveData(saveID);
             m_saveData.Version = m_version;
-
             //Clear the cloud status as we are making a local change that we want to have conflict with the cloud regardless of if it thinks we synced before
             ClearCloudSyncStatus(user);
-
             return m_saveData.Save(false);
         }
 
@@ -497,12 +445,8 @@ namespace SoftLiu.Save
         {
             if (string.IsNullOrEmpty(user.ID))
                 return;
-
             Dictionary<string, object> cloudSaveStatus = null;
-
             string cloudSaveStatusString = PlayerPrefs.GetString(CloudSaveStatusKey);
-
-
             if (!string.IsNullOrEmpty(cloudSaveStatusString))
             {
                 try
@@ -511,17 +455,11 @@ namespace SoftLiu.Save
                 }
                 catch (Exception) { }
             }
-
             if (cloudSaveStatus != null && user != null && !string.IsNullOrEmpty(user.ID) && cloudSaveStatus.ContainsKey(user.ID))
             {
-
                 cloudSaveStatus.Remove(user.ID);
-
-
                 PlayerPrefs.SetString(CloudSaveStatusKey, MiniJSON.Serialize(cloudSaveStatus));
-
                 PlayerPrefs.Save();
-
             }
         }
 

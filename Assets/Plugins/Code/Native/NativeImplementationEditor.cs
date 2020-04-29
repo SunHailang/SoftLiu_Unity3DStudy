@@ -27,7 +27,9 @@ namespace SoftLiu.Plugins.Native
 
         public string GetBundleVersion()
         {
+#if UNITY_EDITOR
             return PlayerSettings.bundleVersion;
+#endif
         }
 
         public string GetUniqueUserID()
@@ -38,16 +40,12 @@ namespace SoftLiu.Plugins.Native
 
         public string GetGameLanguageISO()
         {
-#if CHINA_VERSION
             return "zh-CN";
-#else
-            return "en";
-#endif
         }
 
         public string GetUserCountryISO()
         {
-            return "US";
+            return "CHINA";
         }
 
         public string GetConnectionType()
@@ -82,22 +80,26 @@ namespace SoftLiu.Plugins.Native
 
         public void ShowMessageBox(string title, string message, int msg_id = -1)
         {
+#if UNITY_EDITOR
             bool result = UnityEditor.EditorUtility.DisplayDialog(title, message, "OK");
 
             if (msg_id != -1)
             {
                 //SoftNativeReceiver.Instance.MessageBoxClick(string.Format("{0}:{1}", msg_id, result ? "OK" : "CANCEL"));
             }
+#endif
         }
 
         public void ShowMessageBoxWithButtons(string title, string message, string ok_button, string cancel_button, int msg_id = -1)
         {
+#if UNITY_EDITOR
             bool result = UnityEditor.EditorUtility.DisplayDialog(title, message, ok_button, cancel_button);
 
             if (msg_id != -1)
             {
                 //FGOLNativeReceiver.Instance.MessageBoxClick(string.Format("{0}:{1}", msg_id, result ? "OK" : "CANCEL"));
             }
+#endif
         }
 
         public int GetMemoryUsage()

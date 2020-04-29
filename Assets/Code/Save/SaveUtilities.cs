@@ -116,112 +116,61 @@ namespace SoftLiu.Save
         public static int DeserializeVersion(Stream stream)
         {
             bool isLittleEndian = BitConverter.IsLittleEndian;
-
-
-
             int version = -1;
-
             byte[] versionBytes = BitConverter.GetBytes(version);
             stream.Read(versionBytes, 0, versionBytes.Length);
             if (!isLittleEndian) Array.Reverse(versionBytes);
-
             version = BitConverter.ToInt32(versionBytes, 0);
-
-            int versionStringLength = 0;
-
+                        int versionStringLength = 0;
             byte[] versionStringLengthBytes = BitConverter.GetBytes(versionStringLength);
-
             stream.Read(versionStringLengthBytes, 0, versionStringLengthBytes.Length);
-
             if (!isLittleEndian) Array.Reverse(versionStringLengthBytes);
-
             versionStringLength = BitConverter.ToInt32(versionStringLengthBytes, 0);
-
-
-
             try
-
             {
-
                 if (versionStringLength < MaxHeaderVersionLength)
-
                 {
-
                     byte[] versionStringBytes = new byte[versionStringLength];
-
                     stream.Read(versionStringBytes, 0, versionStringLength);
-
                     if (!isLittleEndian) Array.Reverse(versionStringBytes);
-
                     string versionString = Encoding.UTF8.GetString(versionStringBytes);
-
                     if (version != Convert.ToInt32(versionString))
-
                     {
-
                         throw new Exception();
-
                     }
-
                 }
                 else
-
                 {
-
                     throw new Exception();
-
                 }
-
             }
-
             catch (Exception)
-
             {
-
                 version = -1;
-
             }
-
             return version;
         }
 
         public static byte[] SerializeVersion(int version)
         {
             bool isLittleEndian = BitConverter.IsLittleEndian;
-
             List<byte> bytes = new List<byte>();
-
             byte[] versionBytes = BitConverter.GetBytes(version);
             if (!isLittleEndian)
             {
                 Array.Reverse(versionBytes);
             }
-
             bytes.AddRange(versionBytes);
-
             string versionString = version.ToString();
-
             byte[] versionStringBytes = Encoding.UTF8.GetBytes(versionString);
-
             byte[] versionStringLengthBytes = BitConverter.GetBytes(versionStringBytes.Length);
-
-
-
             if (!isLittleEndian)
-
             {
-
                 Array.Reverse(versionStringLengthBytes);
-
                 Array.Reverse(versionStringBytes);
-
             }
-
-
-
             bytes.AddRange(versionStringLengthBytes);
             bytes.AddRange(versionStringBytes);
-
             return bytes.ToArray();
         }
 
@@ -234,21 +183,15 @@ namespace SoftLiu.Save
                 byte[] lengthBytes = BitConverter.GetBytes(dataLength);
                 fs.Read(lengthBytes, 0, lengthBytes.Length);
                 dataLength = BitConverter.ToInt32(lengthBytes, 0);
-
                 MemoryStream ms = new MemoryStream();
-
                 byte[] buffer = new byte[1024];
-
                 int read = 0;
-
                 while ((read = fs.Read(buffer, 0, Math.Min(dataLength, buffer.Length))) > 0 && dataLength > 0)
                 {
                     dataLength -= read;
                     ms.Write(buffer, 0, read);
                 }
-
                 ms.Seek(0, SeekOrigin.Begin);
-
                 return ms;
             }
         }
@@ -262,14 +205,12 @@ namespace SoftLiu.Save
         {
             MD5 md5 = MD5.Create();
             byte[] hash = md5.ComputeHash(input);
-
             // step 2, convert byte array to hex string
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < hash.Length; i++)
             {
                 sb.Append(hash[i].ToString("X2"));
             }
-
             return sb.ToString();
         }
 
@@ -277,7 +218,6 @@ namespace SoftLiu.Save
         {
             MD5 md5 = MD5.Create();
             byte[] hash = md5.ComputeHash(input);
-
             // step 2, convert byte array to base64 string
             return Convert.ToBase64String(hash);
         }
@@ -294,10 +234,10 @@ namespace SoftLiu.Save
             {
                 return true;
             }
-            //else if (Util.IsDiskSpaceAvailable(Plugins.Native.NativeBinding.Instance.GetPersistentDataPath() + "/CloudSaveSpaceTest.txt", SaveData.ReservedDiskSpace))
-            //{
-            //    return true;
-            //}
+            else if (Util.IsDiskSpaceAvailable(Plugins.Native.NativeBinding.Instance.GetPersistentDataPath() + "/CloudSaveSpaceTest.txt", SaveData.ReservedDiskSpace))
+            {
+                return true;
+            }
             else
             {
                 return false;

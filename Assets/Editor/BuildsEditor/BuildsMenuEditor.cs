@@ -5,6 +5,7 @@ using UnityEditor;
 using SoftLiu.Build;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class BuildsMenuEditor
 {
@@ -21,6 +22,17 @@ public class BuildsMenuEditor
         BuildProcess.PerformUnityBuildSteps = performUnityBuildSteps;
 
         string buildPath = BuildProcess.GetBuildPath(target, type, fromJenkins);
+        if (target == BuildTarget.Android || target == BuildTarget.iOS)
+        {
+            if (!Directory.Exists(buildPath))
+            {
+                Directory.CreateDirectory(buildPath);
+            }
+            else
+            {
+                FileUtility.DeleteDirectory(buildPath);
+            }
+        }
         BuildProcess.Excute(target, type, buildPath, runAfterBuild);
         if (!string.IsNullOrEmpty(openedScene) && openedScene != GetLoadedScene())
         {

@@ -208,10 +208,8 @@ public class GameDB
                 if (data.TryGetValue(baseName + field.Name, out value) || (field.Name.StartsWith("m_") && data.TryGetValue(baseName + field.Name.Substring(2), out value))
                    || data.TryGetValue(baseNameAlt + field.Name, out value) || (field.Name.StartsWith("m_") && data.TryGetValue(baseNameAlt + field.Name.Substring(2), out value)))
                 {
-
                     // Create array
                     System.Array array;
-
                     if (value is IList)
                     {
                         array = System.Array.CreateInstance(field.FieldType.GetElementType(), (value as IList).Count);
@@ -282,7 +280,7 @@ public class GameDB
 
     public static void GetGameDBInEditor(ref GameDB m_gameDB)
     {
-#if UNITY_EDITOR
+#if UNITY_EDITOR
         if (m_gameDB == null)
         {
             GameData gameData = ScriptableObject.CreateInstance<GameData>();
@@ -293,5 +291,5 @@ public class GameDB
             m_gameDB.Initialize(gameData.GetAllItems());
         }
 #endif
-    }
+    }
 }

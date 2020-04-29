@@ -198,23 +198,18 @@ namespace SoftLiu.Save
         public MemoryStream SaveToStream()
         {
             MemoryStream stream = null;
-
             string json = m_saveData.ToJSON();
-
             //Compress the data using LZF compression
             byte[] compressed = null;
-
             using (MemoryStream compMemStream = new MemoryStream())
             {
                 using (StreamWriter writer = new StreamWriter(compMemStream, Encoding.UTF8))
                 {
                     writer.Write(json);
                     writer.Close();
-
                     compressed = CLZF2.Compress(compMemStream.ToArray());
                 }
             }
-
             if (compressed != null)
             {
                 byte[] encrypted = AESEncryptor.Encrypt(m_cryptoKey, m_cryptoIV, compressed);
@@ -222,26 +217,21 @@ namespace SoftLiu.Save
                 if (encrypted != null)
                 {
                     stream = new MemoryStream();
-
                     //Write version and headers!
                     byte[] version = SaveUtilities.SerializeVersion(HeaderVersion);
                     stream.Write(version, 0, version.Length);
-
                     byte[] header = SaveUtilities.SerializeHeader(m_modifiedTime, m_deviceName, SaveUtilities.CalculateMD5Hash(encrypted), encrypted.Length);
                     stream.Write(header, 0, header.Length);
-
                     //Write encrypted and compressed data to stream
                     stream.Write(encrypted, 0, encrypted.Length);
                 }
             }
-
             return stream;
         }
 
         public LoadState Load()
         {
             LoadState state = LoadState.NotFound;
-
             string savePath = null;
             if (File.Exists(m_savePath))
             {
@@ -287,13 +277,11 @@ namespace SoftLiu.Save
                 Debug.LogWarning("No save file found at path: " + savePath);
             }
 
-
             //If we can't load from disk try player prefs! Player prefs will be set if we detected an issue when saving!
             if (state != LoadState.OK)
             {
                 string playerPrefKey = "Save." + m_key + ".sav";
                 string prefSaveString = PlayerPrefs.GetString(playerPrefKey);
-
                 if (!string.IsNullOrEmpty(prefSaveString))
                 {
                     try
@@ -310,24 +298,19 @@ namespace SoftLiu.Save
                     }
                 }
             }
-
             return state;
         }
 
         public LoadState LoadFromStream(Stream stream)
         {
             LoadState state = LoadState.Corrupted;
-
             try
             {
                 byte[] decompressed = null;
                 byte[] contentBytes = null;
-
                 bool versionOkay = false;
-
                 //Check version first
                 int headerVersion = SaveUtilities.DeserializeVersion(stream);
-
                 if (headerVersion == -1)
                 {
                     state = LoadState.Corrupted;
@@ -402,7 +385,6 @@ namespace SoftLiu.Save
                 Debug.LogWarning("Exception when parsing file from stream");
                 Debug.LogWarning(e);
             }
-
             return state;
         }
 
@@ -459,7 +441,6 @@ namespace SoftLiu.Save
         {
             //Generate the Salt, with any custom logic and using the user's ID
             string salt = String.Format("{0},{0},{0},{0},{0},{0},{0},{0}", m_key.Length);
-
             Rfc2898DeriveBytes pwdGen = new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(m_key), Encoding.UTF8.GetBytes(salt), 100);
             m_cryptoKey = pwdGen.GetBytes(AESEncryptor.KeySize / 8);
             m_cryptoIV = pwdGen.GetBytes(AESEncryptor.KeySize / 8);

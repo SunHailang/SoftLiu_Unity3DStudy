@@ -373,7 +373,6 @@ public static class Util
     public static bool IsDiskSpaceAvailable(string path, int size)
     {
         bool isAvailable = true;
-
         try
         {
             System.IO.File.WriteAllBytes(path, new byte[size]);
@@ -395,7 +394,6 @@ public static class Util
                 Debug.LogError(string.Format("IsDiskSpaceAvailable :: Exception deleting test file after checking for free disk space :: Required size = {0} Bytes :: Required path = {1} :: Exception = {2}", size, path, e.ToString()));
             }
         }
-
         return isAvailable;
     }
 
@@ -404,7 +402,6 @@ public static class Util
     public static long GetFileSizeOnDisk(string path)
     {
         long size = -1;
-
         try
         {
             if (System.IO.File.Exists(path))
@@ -443,13 +440,11 @@ public static class Util
         MonoBehaviour.Destroy(helperObject.gameObject);
     }
 
-    // http://answers.unity3d.com/questions/959091/how-can-i-make-a-lerp-move-in-an-arc-instead-of-a.html
     public static Vector3 CubeBezier3(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
     {
         return (((-p0 + 3 * (p1 - p2) + p3) * t + (3 * (p0 + p2) - 6 * p1)) * t + 3 * (p1 - p0)) * t + p0;
     }
 
-    // https://forum.unity.com/threads/calculatefrustumplanes-without-allocations.371636/
     private static System.Action<Plane[], Matrix4x4> _calculateFrustumPlanes_Imp;
     public static void CalculateFrustumPlanesNonAlloc(Plane[] planes, Matrix4x4 worldToProjectMatrix)
     {
@@ -495,7 +490,6 @@ public static class Util
         var currentReachability = Application.internetReachability;
         return currentReachability;
     }
-
 
     // Adding this here to make it easier to use enums in the state parameters rather than strings  
     public static T CastObjectToEnum<T>(object o)
