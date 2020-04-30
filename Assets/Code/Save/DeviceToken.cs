@@ -21,10 +21,10 @@ namespace SoftLiu.Save
             {
                 string deviceTokenPath = null;
 
-                if (!string.IsNullOrEmpty(Application.persistentDataPath/*FGOL.Plugins.Native.NativeBinding.Instance.GetPersistentDataPath()*/))
+                if (!string.IsNullOrEmpty(Plugins.Native.NativeBinding.Instance.GetPersistentDataPath()))
                 {
                     //Check for a device token on the device, if we can't find one we will create one
-                    deviceTokenPath = Application.persistentDataPath/*FGOL.Plugins.Native.NativeBinding.Instance.GetPersistentDataPath()*/ + "/device.dt";
+                    deviceTokenPath = Plugins.Native.NativeBinding.Instance.GetPersistentDataPath() + "/device.dt";
 
                     if (File.Exists(deviceTokenPath))
                     {

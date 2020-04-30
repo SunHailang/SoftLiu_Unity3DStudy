@@ -17,7 +17,7 @@ public class Splash : MonoBehaviour
 
     private void Awake()
     {
-        Localization.Instance.Init();
+
     }
 
     // Use this for initialization

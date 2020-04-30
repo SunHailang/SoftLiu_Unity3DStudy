@@ -11,43 +11,71 @@ namespace SoftLiu.Localization
     {
         private Dictionary<string, string> m_localizationVals = new Dictionary<string, string>();
 
-        private const string m_path = "/Resources/Localization_Chinese.txt";
+        private const string m_file = "Localization_Chinese.csv";
 
-        private string m_pathLanguage = string.Empty;
+        private string m_language;
+        public string language
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(m_language))
+                {
+                    m_language = PlayerPrefs.GetString("Language", "Chinese");
+                }
+                return m_language;
+            }
+            set
+            {
+                if (m_language != value)
+                {
+                    m_language = value;
+                }
+            }
+        }
 
         public Localization()
         {
-            m_pathLanguage = Application.dataPath + m_path;
-            ReadCSVFile(m_pathLanguage);
+            //Resources.Load<TextAsset>("Localization_Chinese");
+            LoadCSV(m_file);
         }
 
-        public void Init()
+        public void LoadCSV(string fileName, bool merge = false)
         {
-            
-        }
-
-        private void ReadCSVFile(string path)
-        {
-            Dictionary<string, string> mTemp = new Dictionary<string, string>();
-            mTemp.Clear();
-            string[] lines = File.ReadAllLines(path, Encoding.UTF8);
-            if (lines.Length <= 0)
+            try
             {
-                return;
-            }
-            for (int i = 1; i < lines.Length; i++)
-            {
-                if (string.IsNullOrEmpty(lines[i]))
+                string path = Application.dataPath + "/Resources/" + fileName;
+                m_localizationVals.Clear();
+                string[] lines = File.ReadAllLines(path, Encoding.UTF8);
+                if (lines.Length <= 0)
                 {
-                    continue;
+                    return;
                 }
-                int index = lines[i].IndexOf(',');
-                string key = lines[i].Substring(0, index);
-                string value = lines[i].Substring(index + 1, lines[i].Length - index - 1);
-
-                mTemp.Add(key, value);
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    if (string.IsNullOrEmpty(lines[i]))
+                    {
+                        continue;
+                    }
+                    int index = lines[i].IndexOf(',');
+                    string key = lines[i].Substring(0, index);
+                    string value = lines[i].Substring(index + 1, lines[i].Length - index - 1);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        if (value[0] == '"' && value[value.Length - 1] == '"')
+                        {
+                            value = value.Substring(1, value.Length - 2);
+                        }
+                        if (!m_localizationVals.ContainsKey(key))
+                        {
+                            m_localizationVals.Add(key, value);
+                        }
+                    }
+                }
             }
-            m_localizationVals = mTemp;
+            catch (System.Exception error)
+            {
+                Debug.LogError("Localization ReadCSVFile Error: " + error.Message);
+            }
         }
 
         public string Get(string key)
@@ -66,6 +94,26 @@ namespace SoftLiu.Localization
                 return key;
             }
             return string.Format(Get(key), parameters);
+        }
+
+        public void LoadLanguageFromTextAsset(string language)
+        {
+            string localizationFile = null;
+            if (language.ToLower().Equals("chinese"))
+            {
+                localizationFile = "Localization_Chinese.csv";
+            }
+            else if (language.ToLower().Equals("english"))
+            {
+                localizationFile = "Localization_English.csv";
+            }
+            if (localizationFile == null)
+            {
+                Debug.LogError("Main localization not found! Was attempting to load " + language);
+                localizationFile = "Localization_English.csv";
+            }
+            this.language = language;
+            LoadCSV(localizationFile, false);
         }
     }
 }

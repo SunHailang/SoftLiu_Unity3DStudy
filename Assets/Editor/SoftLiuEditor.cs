@@ -1,80 +1,69 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Text;
-using System.Collections.Specialized;
 
 public class SoftLiuEditor
 {
-
-    [MenuItem("SoftLiu/PSDtoPNG", priority = 5)]
-    public static void PSDtoPNG()
+    [MenuItem("SoftLiu/Utility/Fonts/Text", priority = 1)]
+    public static void FontsTextUpdate()
     {
-        // 获取选择的对象列表
-        GameObject[] selectList = Selection.GetFiltered<GameObject>(SelectionMode.TopLevel);
-        Debug.Log("egret tools： " + selectList.Length);
-        for (int i = 0; i < selectList.Length; i++)
+        try
         {
-            UnityEngine.Debug.Log(selectList[i].gameObject.name);
-            //Egret3DExportTools.ExportPrefabTools.ExportPrefab(null);
-        }
-    }
-
-    [MenuItem("SoftLiu/PrintSelect", priority = 0)]
-    public static void callbackEgretTools()
-    {
-
-
-
-    }
-
-    [MenuItem("SoftLiu/Fonts/Text", priority = 1)]
-    public static void FontsText()
-    {
-        string path = Application.dataPath + "/Resources/newText.txt";
-        string path1 = Application.dataPath + "/Resources/newText1.txt";
-        if (File.Exists(path))
-        {
-            Debug.Log("strat");
-            string str = File.ReadAllText(path);
-            string str1 = File.ReadAllText(path1);
-            StringCollection sc = new StringCollection();
-            StringBuilder sb = new StringBuilder();
-            List<char> charLins = new List<char>();
-            Debug.Log(str.Length);
-            for (int i = 0; i < str.Length; i++)
+            string path = Path.Combine(Application.dataPath, "../Tools/Fonts/newText.txt");
+            string gameTextPath = Path.Combine(Application.dataPath, "Resources/Localization_Chinese.csv");
+            if (File.Exists(path))
             {
-                if (str[i] == '\n' || str[i] == ' ' || str[i] == '\t' || str[i] == '\0')
-                {
-                    continue;
-                }
-                if (str[i] == '\r')
-                {
-                    continue;
-                }
-                if (!charLins.Contains(str[i]))
-                {
-                    charLins.Add(str[i]);
-                }
-                //if (!str1.Contains(str[i].ToString()))
-                //{
-                //    Debug.Log((int)str[i]);
-                //}
-            }
+                UnityEngine.Debug.Log("strat");
+                bool overwrite = false;
 
-            for (int i = 0; i < charLins.Count; i++)
-            {
-                sb.Append(charLins[i]);
+                string str = File.ReadAllText(path);
+                string gameText = File.ReadAllText(gameTextPath);
+
+                StringBuilder sb = new StringBuilder();
+                List<char> charLins = new List<char>();
+                char[] strArrary = str.ToCharArray();
+                charLins.AddRange(strArrary);
+                for (int i = 0; i < gameText.Length; i++)
+                {
+                    char textChar = gameText[i];
+                    if (textChar == '\n' || textChar == ' ' || textChar == '\t' || textChar == '\0' || textChar == '\r')
+                    {
+                        continue;
+                    }
+                    if (!charLins.Contains(textChar))
+                    {
+                        charLins.Add(textChar);
+                        UnityEngine.Debug.Log("new word: " + textChar);
+                        overwrite = true;
+                    }
+                }
+
+                for (int i = 0; i < charLins.Count; i++)
+                {
+                    sb.Append(charLins[i]);
+                }
+                File.WriteAllText(path, sb.ToString());
+                if (overwrite)
+                {
+                    string gamePath = Path.Combine(Application.dataPath, "Arts/GUI/Fonts/fontText.txt");
+                    if (!File.Exists(gamePath))
+                        Debug.LogError(gamePath + " is not exist.");
+                    File.WriteAllText(gamePath, sb.ToString());
+                    AssetDatabase.Refresh();
+                }
+                UnityEngine.Debug.Log("finish");
             }
-            Debug.Log(sb.Length);
-            File.WriteAllText(path, sb.ToString());
-            Debug.Log("finish");
+            else
+            {
+                Debug.LogError("file not exists.");
+            }
         }
-        else
+        catch (System.Exception error)
         {
-            Debug.LogError("file not exists.");
+            UnityEngine.Debug.LogError("FontsTextUpdate Error: " + error.Message);
         }
     }
 }
+

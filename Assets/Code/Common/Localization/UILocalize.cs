@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using SoftLiu;
+using SoftLiu.Event;
+using System;
 
 namespace SoftLiu.Localization
 {
@@ -20,8 +22,16 @@ namespace SoftLiu.Localization
 
         private void Awake()
         {
+            //Register
+            EventManager<Events>.Instance.RegisterEvent(Events.ChangedLanguage, OnChangedLanguage);
+
             m_text = gameObject.GetComponent<TextMeshProUGUI>();
             Assert.Fatal(m_text != null, string.Format("name: {0} UILocalize TextMeshProUGUI is null.", gameObject.name));
+        }
+
+        private void OnChangedLanguage(Events eventType, object[] mParams)
+        {
+            OnLoad(m_params);
         }
 
         private void OnEnable()
@@ -56,6 +66,12 @@ namespace SoftLiu.Localization
             {
                 m_text.SetText(string.Format(value, mParams));
             }
+        }
+
+        private void OnDestroy()
+        {
+            //Deregister
+            EventManager<Events>.Instance.DeregisterEvent(Events.ChangedLanguage, OnChangedLanguage);
         }
     }
 }
