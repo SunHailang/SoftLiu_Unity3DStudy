@@ -8,7 +8,8 @@ using System;
 using TMPro;
 using SoftLiu.Localization;
 using SoftLiu.SceneManagers;
-
+using SoftLiu.Save;
+using SoftLiu.Authentication;
 
 public class Splash : MonoBehaviour
 {
@@ -24,11 +25,13 @@ public class Splash : MonoBehaviour
     private void Start()
     {
         SaveFacade.Instance.Init();
+        SaveGameManager.Instance.Load(Authenticator.Instance.User);
+        
     }
     float m_frame = 0;
     private void Update()
     {
-        RequestsManager.Instance.OnUpdate();
+
     }
 
     public void OnClick()
@@ -60,5 +63,16 @@ public class Splash : MonoBehaviour
                 Debug.LogError("GetServerTime Error: " + response.error);
             }
         });
+    }
+
+    public void BtnStart_OnClick()
+    {
+        StartCoroutine(StartLogin());
+    }
+
+    private IEnumerator StartLogin()
+    {
+        AsyncOperation async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("LoginLoader", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        yield return async;
     }
 }

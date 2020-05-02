@@ -31,6 +31,15 @@ namespace SoftLiu.Plugins.Native
             }
         }
 
+        public bool HasNotch()
+        {
+            return m_javaNative.Call<bool>("HasNotch");
+        }
+        public int[] GetNotchSize()
+        {
+            return m_javaNative.Call<int[]>("GetNotchSize");
+        }
+
         public string BackupGetAuthCredentials(string key)
         {
             throw new NotImplementedException();

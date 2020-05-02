@@ -25,6 +25,10 @@ namespace SoftLiu.Plugins.Native
         bool IsPictureInPictureVideoPlaying();
         void RequestExclusiveAudio(bool exclusiveAudio);
 
+        // Notch info
+        bool HasNotch();
+        int[] GetNotchSize();
+
         // General info
         int GetMemoryUsage();
         long GetMaxHeapMemory();

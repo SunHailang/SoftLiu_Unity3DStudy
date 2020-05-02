@@ -111,7 +111,7 @@ namespace SoftLiu.Save
 
         public void Upload(User user, Action<Error> callback)
         {
-            if (user != null && !string.IsNullOrEmpty(user.ID))
+            if (user != null && !string.IsNullOrEmpty(user.userID))
             {
                 Debug.Log("SaveGameManger (Upload) :: Uploading to cloud!");
                 UploadSave(user, m_saveData, callback);
@@ -443,7 +443,7 @@ namespace SoftLiu.Save
 
         private void ClearCloudSyncStatus(User user)
         {
-            if (string.IsNullOrEmpty(user.ID))
+            if (string.IsNullOrEmpty(user.userID))
                 return;
             Dictionary<string, object> cloudSaveStatus = null;
             string cloudSaveStatusString = PlayerPrefs.GetString(CloudSaveStatusKey);
@@ -455,9 +455,9 @@ namespace SoftLiu.Save
                 }
                 catch (Exception) { }
             }
-            if (cloudSaveStatus != null && user != null && !string.IsNullOrEmpty(user.ID) && cloudSaveStatus.ContainsKey(user.ID))
+            if (cloudSaveStatus != null && user != null && !string.IsNullOrEmpty(user.userID) && cloudSaveStatus.ContainsKey(user.userID))
             {
-                cloudSaveStatus.Remove(user.ID);
+                cloudSaveStatus.Remove(user.userID);
                 PlayerPrefs.SetString(CloudSaveStatusKey, MiniJSON.Serialize(cloudSaveStatus));
                 PlayerPrefs.Save();
             }

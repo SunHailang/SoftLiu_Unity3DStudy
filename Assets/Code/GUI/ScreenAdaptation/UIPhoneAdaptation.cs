@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SoftLiu;
+using SoftLiu.Plugins.Native;
+using SoftLiu.Event;
 
 public class UIPhoneAdaptation : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class UIPhoneAdaptation : MonoBehaviour
     [Range(-2, 100)]
     public float m_height = -2;
 
+    private bool m_init = false;
+
     private void Awake()
     {
         m_rectTransform = gameObject.GetComponent<RectTransform>();
@@ -20,14 +24,22 @@ public class UIPhoneAdaptation : MonoBehaviour
 
         //Screen.height
         //Screen.width
-        Debug.Log(string.Format("Screen width: {0}  height: {1}", Screen.width, Screen.height));
+        //Debug.Log(string.Format("Screen width: {0}  height: {1}", Screen.width, Screen.height));
     }
 
 
     private void Update()
     {
-        //m_rectTransform.anchoredPosition = new Vector2(m_width, m_height);
-        m_rectTransform.sizeDelta = new Vector2(-m_width, -m_height);
+        if (m_init) return;
+        m_init = true;
+        if (NativeBinding.Instance.HasNotch())
+        {
+            int[] notchs = NativeBinding.Instance.GetNotchSize();
+            m_width = (float)notchs[0];
+            //m_rectTransform.anchoredPosition = new Vector2(m_width, m_height);
+            m_rectTransform.sizeDelta = new Vector2(-m_width, -m_height);
+            EventManager<Events>.Instance.TriggerEvent(Events.HasNotchAndSize, notchs);
+        }
     }
 
 

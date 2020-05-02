@@ -49,3 +49,8 @@ MonoBehaviour:
   - type: UIPingFPS
     prefab: {fileID: 5038138273045593867, guid: 68b9fd1d80b52484b951b58c5d34dd4d,
       type: 3}
+  - type: MissionManager
+    prefab: {fileID: 7346171628624616748}
+  - type: SoundController
+    prefab: {fileID: 3752039367854556457, guid: 1e19c0bfedae1434bbec108eff535e2c,
+      type: 3}

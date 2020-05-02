@@ -14,7 +14,7 @@ public class User
     private string m_saveID = null;
     private string m_nickName = "";
     private string m_flag = "";
-    public string ID
+    public string userID
     {
         get { return m_userID; }
         set { m_userID = value; }

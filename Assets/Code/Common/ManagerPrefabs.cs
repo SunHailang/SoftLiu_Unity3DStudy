@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using SoftLiu.Servers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,6 +39,11 @@ public class ManagerPrefabs : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        
+    }
+
     public GameObject GetEntryPrefab(string type)
     {
         GameObject obj = null;
@@ -49,5 +55,11 @@ public class ManagerPrefabs : MonoBehaviour
             }
         }
         return obj;
+    }
+
+
+    private void Update()
+    {
+        RequestsManager.Instance.OnUpdate();
     }
 }

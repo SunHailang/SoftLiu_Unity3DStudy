@@ -24,7 +24,7 @@ public class ScreenUIAdaptation : MonoBehaviour
         SoftLiu.Assert.Fatal(m_rectTransform != null, "ScreenAdaptation m_rectTransform is null.");
         //Screen.height
         //Screen.width
-        Debug.Log(string.Format("Screen width: {0}  height: {1}", Screen.width, Screen.height));
+        //Debug.Log(string.Format("Screen width: {0}  height: {1}", Screen.width, Screen.height));
     }
 
     private void OnEnable()

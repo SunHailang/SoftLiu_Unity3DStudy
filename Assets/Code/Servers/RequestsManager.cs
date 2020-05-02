@@ -93,5 +93,12 @@ namespace SoftLiu.Servers
             }
             return request;
         }
+
+
+        public void DownloadHandlerBufferGet(string url, System.Action<byte[], string, long> callback, Dictionary<string, object> headers = null)
+        {
+
+        }
+
     }
 }

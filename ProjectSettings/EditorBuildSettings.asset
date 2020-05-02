@@ -6,12 +6,33 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/DragDropTest.unity
-    guid: b6d5500ffcf5729439100006f1a40cea
+    path: Assets/Scenes/Loading/SplashLoader.unity
+    guid: e4317b6f7004dc041988448e45bd9848
+  - enabled: 1
+    path: Assets/Scenes/Loading/LoginLoader.unity
+    guid: 3aad3c9ba40a66b4aac443bc8d4505c2
+  - enabled: 1
+    path: Assets/Scenes/Loading/BootLoader.unity
+    guid: 707cd9617d5036a42a47e6a8851e4e83
+  - enabled: 1
+    path: Assets/Scenes/Loading/MenuToIngame.unity
+    guid: c62e5e2b860d62c47af6af1049e75f02
+  - enabled: 1
+    path: Assets/Scenes/FrontEnd/FrontEnd.unity
+    guid: 35ff90d39fb9fc9409d1f663619d7277
+  - enabled: 1
+    path: Assets/Scenes/Ingame/Common3D.unity
+    guid: 1e6463beae02c8c49a76b414f0c62fbb
+  - enabled: 1
+    path: Assets/Scenes/Ingame/IngameHDU.unity
+    guid: 37dccbd70b7d8e242b1aa8fcb315ff89
+  - enabled: 1
+    path: Assets/Scenes/Ingame/Map.unity
+    guid: 9f547b140d3e54545b29109d46ab9778
   - enabled: 1
     path: Assets/Scenes/ScreenAdaptation.unity
     guid: 73e3896aa7eb31742a3d131334343aaa
   - enabled: 1
-    path: Assets/Scenes/Ingame/Common3D.unity
-    guid: 1e6463beae02c8c49a76b414f0c62fbb
+    path: Assets/Scenes/DragDropTest.unity
+    guid: b6d5500ffcf5729439100006f1a40cea
   m_configObjects: {}

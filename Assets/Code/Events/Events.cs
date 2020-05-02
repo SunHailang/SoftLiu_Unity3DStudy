@@ -5,4 +5,9 @@ using UnityEngine;
 public enum Events
 {
     ChangedLanguage,
+    GameStart,
+    GamePause,
+    GameEnd,
+
+    HasNotchAndSize,
 }

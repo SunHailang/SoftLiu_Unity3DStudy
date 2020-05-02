@@ -67,6 +67,37 @@ public static class FileUtility
         }
     }
 
+    /// <summary>
+    /// 移动文件 从 source 到 target
+    /// </summary>
+    /// <param name="source">源文件路径</param>
+    /// <param name="target">目标文件路径</param>
+    /// <param name="overwrite">重写目标文件  true：重写 ， false：自动跳过不操作</param>
+    public static void FileMoveTo(string source, string target, bool overwrite = false)
+    {
+        if (!File.Exists(source)) return;
+        try
+        {
+            if (!overwrite && File.Exists(target))
+            {
+                Debug.Log(string.Format("FileMoveTo File is Exist {0}", target));
+                return;
+            }
+            if (File.Exists(target)) File.Delete(target);
+
+            string targetDir = Path.GetDirectoryName(target);
+            if (!Directory.Exists(targetDir)) Directory.CreateDirectory(targetDir);
+
+            File.Copy(source, target, true);
+            File.Delete(source);
+        }
+        catch (Exception error)
+        {
+            Debug.LogError(string.Format("FileMoveTo target:{0} , Error:{1}", target, error.Message));
+        }
+
+    }
+
 
     public static string GetContentDispositionByName(string disposition, string name)
     {

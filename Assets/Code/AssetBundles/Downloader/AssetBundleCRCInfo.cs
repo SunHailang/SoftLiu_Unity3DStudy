@@ -8,7 +8,7 @@ namespace SoftLiu.AssetBundles.Downloader
     {
         public string m_name;
         public uint m_CRC;
-        public int m_fileSizeBytes;
+        public long m_fileSizeBytes;
 
 
         /// <inheritdoc />

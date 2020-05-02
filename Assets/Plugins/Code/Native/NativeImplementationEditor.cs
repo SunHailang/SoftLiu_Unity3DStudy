@@ -78,6 +78,15 @@ namespace SoftLiu.Plugins.Native
             return "";
         }
 
+        public bool HasNotch()
+        {
+            return true;
+        }
+        public int[] GetNotchSize()
+        {
+            return new int[] { 70, 120 };
+        }
+
         public void ShowMessageBox(string title, string message, int msg_id = -1)
         {
 #if UNITY_EDITOR
