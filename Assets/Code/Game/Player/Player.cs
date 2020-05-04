@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        App.Instance.SetActivePlayer(this);
+        
     }
 
     private void OnEnable()
@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        App.Instance.SetActivePlayer(this);
+
         SceneManager.LoadScene("IngameHDU", LoadSceneMode.Additive);
 
         //Debug.Log(Vector3.Distance(m_playerCamera.transform.localPosition, m_rayObject.transform.localPosition));
@@ -102,7 +104,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            
+
         }
         m_playerCamera.transform.LookAt(m_rayObject.transform);
 
