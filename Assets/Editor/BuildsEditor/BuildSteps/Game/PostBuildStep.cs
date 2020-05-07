@@ -51,9 +51,9 @@ namespace SoftLiu.Build
                     BuildUtility.HandleGradleVersion(Path.Combine(gradlePath, "launcher/build.gradle"), data);
                 }
 
-                FileUtility.CopyDirectoryFiles(new DirectoryInfo(gradlePath), new DirectoryInfo(path), true, true);
+                FileUtilities.CopyDirectoryFiles(new DirectoryInfo(gradlePath), new DirectoryInfo(path), true, true);
                 string androidPath = Path.Combine(Application.dataPath, "../Tools/Android/Builds");
-                FileUtility.CopyDirectoryFiles(new DirectoryInfo(androidPath), new DirectoryInfo(path), true, true);
+                FileUtilities.CopyDirectoryFiles(new DirectoryInfo(androidPath), new DirectoryInfo(path), true, true);
 
                 string gradleBuildType = "Debug";
                 if (type == BuildType.Preproduction || type == BuildType.Production)

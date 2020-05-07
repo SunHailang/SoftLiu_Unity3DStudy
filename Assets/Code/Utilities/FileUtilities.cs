@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System;
 
-public static class FileUtility
+public static class FileUtilities
 {
 
     /// <summary>
@@ -64,6 +64,42 @@ public static class FileUtility
             {
                 Directory.Delete(source);
             }
+        }
+    }
+    /// <summary>
+    /// 删除 指定文件下的 指定后缀名的文件
+    /// </summary>
+    /// <param name="source">指定的文件夹</param>
+    /// <param name="child">是否包含子文件夹</param>
+    /// <param name="withoutExtensions">指定的后缀名(若为null， 或 空， 删除文件夹内所有文件)</param>
+    public static void DeleteDirectoryFiles(DirectoryInfo source, bool child, params string[] withoutExtensions)
+    {
+        try
+        {
+            if (source == null) return;
+
+            if (child)
+            {
+                foreach (DirectoryInfo dir in source.GetDirectories())
+                {
+                    DeleteDirectoryFiles(dir, child, withoutExtensions);
+                }
+            }
+            foreach (FileInfo file in source.GetFiles())
+            {
+                if (withoutExtensions == null || withoutExtensions.Length <= 0)
+                {
+                    file.Delete();
+                }
+                else if (withoutExtensions.Contains(file.Extension))
+                {
+                    file.Delete();
+                }
+            }
+        }
+        catch (Exception error)
+        {
+            Debug.LogError("CopyFileRecursively Error: " + error.Message);
         }
     }
 

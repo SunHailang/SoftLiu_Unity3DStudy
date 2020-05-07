@@ -4,9 +4,9 @@
  */
 using System.Text.RegularExpressions;
 
-namespace SoftLiu.Utils
+namespace SoftLiu.Utilities
 {
-    public static class RegexUtils
+    public static class RegexUtilities
     {
         /// <summary>
         /// 判断是否是地阿奴按号码

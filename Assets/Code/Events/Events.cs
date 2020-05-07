@@ -5,6 +5,11 @@ using UnityEngine;
 public enum Events
 {
     ChangedLanguage,
+
+    PopupStateLoaded,
+    StateExited,
+    StateChange,
+
     GameStart,
     GamePause,
     GameEnd,

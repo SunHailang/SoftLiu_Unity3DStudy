@@ -7,7 +7,6 @@ using System.Text;
 using UnityEngine.Networking;
 using System.Net;
 using System.IO;
-using SoftLiu.Utils;
 using UnityEngine.UI;
 using SoftLiu.Utilities;
 using SoftLiu.Plugins.Native;

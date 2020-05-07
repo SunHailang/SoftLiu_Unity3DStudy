@@ -27,9 +27,7 @@ namespace SoftLiu.Plugins.Native
 
         public string GetBundleVersion()
         {
-#if UNITY_EDITOR
-            return PlayerSettings.bundleVersion;
-#endif
+            return Application.version;
         }
 
         public string GetUniqueUserID()

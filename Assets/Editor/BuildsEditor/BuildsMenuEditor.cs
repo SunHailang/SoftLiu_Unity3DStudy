@@ -30,7 +30,7 @@ public class BuildsMenuEditor
             }
             else
             {
-                FileUtility.DeleteDirectory(buildPath);
+                FileUtilities.DeleteDirectory(buildPath);
             }
         }
         BuildProcess.Excute(target, type, buildPath, runAfterBuild);

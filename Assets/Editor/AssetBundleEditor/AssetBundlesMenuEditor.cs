@@ -12,6 +12,8 @@ using SoftLiu.AssetBundles.Downloader;
 
 public class AssetBundlesMenuEditor
 {
+
+
     [MenuItem("SoftLiu/AssetBundles/Android/Build Development", false, 0)]
     public static void AssetBundles_BuildAndroidDev()
     {
@@ -30,7 +32,7 @@ public class AssetBundlesMenuEditor
 
     public static void GenerateCRCFileInfoPlatform(BuildTarget platform, BuildType buildType)
     {
-        UnityEngine.Debug.Log("GenerateCRCFileInfo " + platform.ToString());
+        Debug.Log("GenerateCRCFileInfo " + platform.ToString());
         try
         {
             string buildDir = Application.dataPath + "/../Builds/AssetBundles/" + platform.ToString() + "/" + buildType.ToString() + "/" + Application.version;
@@ -40,24 +42,13 @@ public class AssetBundlesMenuEditor
                 {
                     File.Delete(buildDir + "/assetbundles.crc");
                 }
+                DirectoryInfo buildDirInfo = new DirectoryInfo(buildDir);
+                // 删除 所有的 .manifest 文件
+                FileUtilities.DeleteDirectoryFiles(buildDirInfo, true, ".manifest");
+
                 List<AssetBundleCRCInfo> m_crcInfoList = new List<AssetBundleCRCInfo>();
-                string[] assetBundles = Directory.GetFiles(buildDir);
-                foreach (string abFileName in assetBundles)
-                {
-                    FileInfo abFile = new FileInfo(abFileName);
-                    if (abFile.FullName.Contains(".manifest"))
-                    {
-                        File.Delete(abFile.FullName);
-                    }
-                    else if (abFile.Name != platform.ToString() && abFile.Name != Application.version)
-                    {
-                        AssetBundleCRCInfo abcrci = new AssetBundleCRCInfo();
-                        abcrci.m_name = abFile.Name;
-                        abcrci.m_fileSizeBytes = abFile.Length;
-                        abcrci.m_CRC = GenerateCRC32FromFile(abFile.FullName);
-                        m_crcInfoList.Add(abcrci);
-                    }
-                }
+                GetCRCInfoList(buildDirInfo.FullName, buildDirInfo, m_crcInfoList, platform);
+
                 string fileData = "";
                 foreach (AssetBundleCRCInfo abcrci in m_crcInfoList)
                 {
@@ -73,6 +64,31 @@ public class AssetBundlesMenuEditor
         catch (System.Exception e)
         {
             UnityEngine.Debug.Log("GenerateCRCFileInfoPlatform Failed " + e.Message);
+        }
+    }
+
+    private static void GetCRCInfoList(string parent, DirectoryInfo buildDir, List<AssetBundleCRCInfo> crcInfoList, BuildTarget platform)
+    {
+        //Debug.Log("AssetBundleCRCInfo parent: " + parent);
+        foreach (DirectoryInfo dir in buildDir.GetDirectories())
+        {
+            GetCRCInfoList(parent, dir, crcInfoList, platform);
+        }
+        foreach (FileInfo abFile in buildDir.GetFiles())
+        {
+            if (abFile.Name != platform.ToString() && abFile.Name != Application.version)
+            {
+                AssetBundleCRCInfo abcrci = new AssetBundleCRCInfo();
+                //Debug.Log("AssetBundleCRCInfo FullName: " + abFile.FullName);
+                string name = abFile.FullName.Substring(parent.Length);
+                name = name.Trim('\\', '/');
+                name = name.Replace('\\', '/');
+                //Debug.Log("AssetBundleCRCInfo Name: " + name);
+                abcrci.m_name = name;
+                abcrci.m_fileSizeBytes = abFile.Length;
+                abcrci.m_CRC = GenerateCRC32FromFile(abFile.FullName);
+                crcInfoList.Add(abcrci);
+            }
         }
     }
 
@@ -112,7 +128,7 @@ public class AssetBundlesMenuEditor
         }
 #if UNITY_EDITOR
         x.Stop();
-        UnityEngine.Debug.Log("CRC32 " + fileName + ":" + x.ElapsedMilliseconds + "ms <> " + crc.ToString());
+        //UnityEngine.Debug.Log("CRC32 " + fileName + ":" + x.ElapsedMilliseconds + "ms <> " + crc.ToString());
 #endif
         return crc;
     }

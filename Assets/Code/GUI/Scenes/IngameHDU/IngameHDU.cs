@@ -29,11 +29,7 @@ public class IngameHDU : MonoBehaviour
         EventManager<Events>.Instance.RegisterEvent(Events.GameStart, OnGameStart);
 
         Player activePlayer = App.Instance.GetActivePlayer();
-        if (activePlayer == null)
-        {
-            Debug.LogError("Active Player is null.");
-            return;
-        }
+        SoftLiu.Assert.Fatal(activePlayer != null, "Active Player is null.");
         m_playerController = activePlayer;
         m_btnStartPause.interactable = false;
         m_btnPauseImage.SetActive(true);
@@ -42,6 +38,7 @@ public class IngameHDU : MonoBehaviour
 
     private void Update()
     {
+        if (m_playerController == null) return;
         // 得到鼠标当前位置
         //float mouseX = Input.GetAxis("Mouse X");
         //float mouseY = Input.GetAxis("Mouse Y") * m_rotationSpeed;
@@ -54,6 +51,7 @@ public class IngameHDU : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (m_playerController == null) return;
         float horizontal = Input.GetAxis("Horizontal"); //获取垂直轴
         float vertical = Input.GetAxis("Vertical");    //获取水平轴 
         Vector3 move_direction = new Vector3(horizontal, 0, vertical);
@@ -80,5 +78,5 @@ public class IngameHDU : MonoBehaviour
     {
         EventManager<Events>.Instance.DeregisterEvent(Events.GameStart, OnGameStart);
     }
-    
+
 }
