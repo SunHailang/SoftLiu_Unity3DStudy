@@ -76,6 +76,27 @@ namespace SoftLiu.Build
             AssetDatabase.SaveAssets();
         }
 
+
+        private static void CreateSingletonMonoBundle()
+        {
+            string resourcesPath = "Assets/Resources/AssetBundles/";
+            string scripatblePath = resourcesPath + "AssetBundleData.asset";
+
+            AssetBundleData assetBundleData = (AssetBundleData)AssetDatabase.LoadAssetAtPath(scripatblePath, typeof(AssetBundleData));
+
+            SingletonMonoBundle asset = ScriptableObject.CreateInstance<SingletonMonoBundle>();
+            string path1 = "Prefabs/SingletonMono";
+            string path2 = Path.Combine(Application.dataPath, path1);
+            DirectoryInfo dir = new DirectoryInfo(path2);
+            foreach (var item in dir.GetFiles())
+            {
+                if (item.Extension == ".meta") continue;
+
+            }
+            AssetDatabase.CreateAsset(asset, path1);
+
+        }
+
         private static void RemoveAllBundleNames()
         {
             string[] assetBundleNames = AssetDatabase.GetAllAssetBundleNames();
