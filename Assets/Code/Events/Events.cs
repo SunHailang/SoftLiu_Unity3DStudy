@@ -6,6 +6,8 @@ public enum Events
 {
     ChangedLanguage,
 
+    BankUpdated,
+
     PopupStateLoaded,
     StateExited,
     StateChange,
