@@ -38,10 +38,10 @@ using UnityEngine.Events;
 using System.Diagnostics;
 #endif
 
-namespace CodeStage.AntiCheat.Detectors
-{
-	/// <summary>
-	/// Allows to detect foreign managed assemblies in your application.
+namespace CodeStage.AntiCheat.Detectors
+{
+	/// <summary>
+	/// Allows to detect foreign managed assemblies in your application.
 	/// </summary>
 	/// Just add it to any GameObject as usual or through the "GameObject > Create Other > Code Stage > Anti-Cheat Toolkit"
 	/// menu to get started.<br/>

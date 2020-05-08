@@ -1,10 +1,9 @@
 ﻿using System;
-
-namespace CodeStage.AntiCheat.Common
-{
-	[Serializable]
-	public struct ACTkByte16
-	{
+namespace CodeStage.AntiCheat.Common
+{
+	[Serializable]
+	public struct ACTkByte16
+	{
 		public byte b1;
 		public byte b2;
 		public byte b3;
@@ -20,6 +19,6 @@ namespace CodeStage.AntiCheat.Common
 		public byte b13;
 		public byte b14;
 		public byte b15;
-		public byte b16;
-	}
+		public byte b16;
+	}
 }
