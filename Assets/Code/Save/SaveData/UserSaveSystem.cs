@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using CodeStage.AntiCheat.ObscuredTypes;
 
 public class UserSaveSystem : SaveSystem
 {
     public bool userTouristMode = false;
-
+    public ObscuredBool isHacker = false;
 
 
     public UserSaveSystem()
@@ -24,7 +25,8 @@ public class UserSaveSystem : SaveSystem
     {
         try
         {
-            userTouristMode = GetBool("userTouristMode", false);
+            userTouristMode = GetBool("UserTouristMode", false);
+            isHacker = GetBool("IsHacker", false);
         }
         catch (Exception error)
         {
@@ -35,11 +37,20 @@ public class UserSaveSystem : SaveSystem
     public override void Reset()
     {
         userTouristMode = false;
+        isHacker = false;
     }
 
     public override void Save()
     {
-        SetBool("userTouristMode", userTouristMode);
+        try
+        {
+            SetBool("UserTouristMode", userTouristMode);
+            SetBool("IsHacker", isHacker);
+        }
+        catch (Exception error)
+        {
+            Debug.LogError("UserSaveSystem Save Error: " + error.Message);
+        }
     }
 
     public override bool Upgrade()

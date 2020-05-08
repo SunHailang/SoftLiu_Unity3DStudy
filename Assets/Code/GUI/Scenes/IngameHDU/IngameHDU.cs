@@ -63,15 +63,15 @@ public class IngameHDU : MonoBehaviour
 
     private void OnGameStart(Events eventType, object[] mParam)
     {
-        App.Instance.inGame = true;
-        App.Instance.currentPause = false;
+        App.Instance.InGame = true;
+        App.Instance.Pause = false;
         m_btnStartPause.interactable = true;
     }
 
 
     public void BtnPause_OnClick()
     {
-        App.Instance.currentPause = true;
+        App.Instance.Pause = true;
     }
 
     private void OnDestroy()
