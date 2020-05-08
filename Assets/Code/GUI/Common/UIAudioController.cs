@@ -29,8 +29,8 @@ public class UIAudioController : MonoBehaviour
 
     private void Start()
     {
-        m_sliderBGAudio.value = AudioController.Instance.audioBGVolume;
-        m_sliderEffectAudio.value = AudioController.Instance.audioEffectVolume;
+        m_sliderBGAudio.value = AudioManager.Instance.audioBGVolume;
+        m_sliderEffectAudio.value = AudioManager.Instance.audioEffectVolume;
         SetSliderProgress(bg: m_sliderBGAudio.value, effect: m_sliderEffectAudio.value);
 
         if (m_imageTrans.Count <= 0)
@@ -52,7 +52,7 @@ public class UIAudioController : MonoBehaviour
 
     private void LateUpdate()
     {
-        AudioPlayData data = AudioController.Instance.m_BGAudioData;
+        AudioPlayData data = AudioManager.Instance.m_BGAudioData;
         if (data == null) return;
         //data.audioSource.GetSpectrumData(progress, 0, FFTWindow.BlackmanHarris);
         data.audioSource.GetOutputData(progress, 0);
@@ -83,13 +83,13 @@ public class UIAudioController : MonoBehaviour
 
     public void SliderBGAudio_OnChanged()
     {
-        AudioController.Instance.SetAudioBGVolume(m_sliderBGAudio.value);
+        AudioManager.Instance.SetAudioBGVolume(m_sliderBGAudio.value);
         SetSliderProgress(bg: m_sliderBGAudio.value);
     }
 
     public void SliderEffectAudio_OnChanged()
     {
-        AudioController.Instance.SetAudioEffectsVolume(m_sliderEffectAudio.value);
+        AudioManager.Instance.SetAudioEffectsVolume(m_sliderEffectAudio.value);
         SetSliderProgress(effect: m_sliderEffectAudio.value);
     }
 

@@ -47,7 +47,7 @@ public class LoginLoader : MonoBehaviour
         m_inputFieldUserName.text = "softliu";
         m_inputFieldUserPassword.text = "123456";
 
-        AudioController.Instance.PlayBGSound("bgm");
+        AudioManager.Instance.PlayBGSound("bgm");
 
         m_toggleTourist.isOn = SaveFacade.Instance.userSaveSystem.userTouristMode;
     }

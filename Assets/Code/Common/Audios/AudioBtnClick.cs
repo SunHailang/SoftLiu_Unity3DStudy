@@ -10,7 +10,7 @@ public class AudioBtnClick : MonoBehaviour, IPointerClickHandler
     private string m_audioName = "click";
     public void OnPointerClick(PointerEventData eventData)
     {
-        AudioController.Instance.PlayEffectsSound(m_audioName, false);
+        AudioManager.Instance.PlayEffectsSound(m_audioName, false);
     }
 
 }

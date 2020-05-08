@@ -51,6 +51,6 @@ MonoBehaviour:
       type: 3}
   - type: MissionManager
     prefab: {fileID: 7346171628624616748}
-  - type: SoundController
+  - type: AudioManager
     prefab: {fileID: 3752039367854556457, guid: 1e19c0bfedae1434bbec108eff535e2c,
       type: 3}
