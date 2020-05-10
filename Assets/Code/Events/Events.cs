@@ -6,6 +6,8 @@ public enum Events
 {
     ChangedLanguage,
 
+    OnGameDBLoaded,
+
     BankUpdated,
 
     PopupStateLoaded,

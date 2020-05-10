@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4258d84c81a4f8649a4d9763ac99479a, type: 3}
+  m_Script: {fileID: 11500000, guid: 07e27b019bc8fe34e9aec75f9e9351da, type: 3}
   m_Name: AppBundleData
   m_EditorClassIdentifier: 
-  m_assetBundleName: prefabs/singletomono/app
-  m_assetPaths:
-  - Assets/Prefabs/Resources/SingletonMono/App.prefab
+  m_assetBundleName: 
+  m_assetPaths: []
   m_state: 999
-  m_stateName: App
+  m_stateName: 

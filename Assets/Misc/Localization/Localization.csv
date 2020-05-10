@@ -5,3 +5,8 @@ STARING_GAME_APP_NAME,孙海浪,Sun Hai Lang,
 STARING_GAME_DESC,孙海浪，测试用例,"Sun Hai Lang, Test Example",
 STARING_GAME_LOADING,载入中，请稍后 ...,Loading ...,
 STARING_GAME_LOADING_FINISHED,加载完成...,Loading Finished...,
+
+STRING_SAVE_POPUP_ERROR_SAVE_DISABLED_TITLE,错误:停用储存,,
+STRING_SAVE_POPUP_ERROR_SAVE_DISABLED_TEXT_SPACE,"你的装置没有足够的储存空间来储存游戏进度。\n\n请清理出更多储存空间,否则在无法储存的情况下,你将无法进行游戏。",
+STRING_SAVE_POPUP_ERROR_SAVE_DISABLED_TEXT_ACCESS,"游戏无法存取此装置的本机储存空间,因此无法储存你的进度。\n\n请确认你的记忆卡 / 内部储存空间是可以存取的。如果你的装置正连接于计算机上,请拔除连接并再试一次。",
+STRING_SAVE_POPUP_ERROR_SAVE_FAILED_TITLE,错误:,

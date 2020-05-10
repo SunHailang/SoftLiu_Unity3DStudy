@@ -59,6 +59,53 @@ namespace SoftLiu.Save
             }
         }
         #endregion
+
+        public SpaceRequirementResult CheckDiskRequirements(User user)
+        {
+            string saveID = !string.IsNullOrEmpty(user.saveID) ? user.saveID : LocalSaveID;
+            SpaceRequirementResult result = SpaceRequirementResult.PathUnavailable;
+            //Check if the data path is null!
+            if (!string.IsNullOrEmpty(SoftLiu.Plugins.Native.NativeBinding.Instance.GetPersistentDataPath()))
+            {
+                //Next try and create an empty save file for the user if one doesn't exist already!
+                if (!File.Exists(SaveUtilities.GetSavePath(saveID)))
+                {
+                    SaveState state = CreateNewSave(user);
+                    switch (state)
+                    {
+                        case SaveState.OK:
+                            result = SpaceRequirementResult.OK;
+                            break;
+                        case SaveState.PermissionError:
+                            result = SpaceRequirementResult.PathUnavailable;
+                            break;
+                        case SaveState.DiskSpace:
+                            result = SpaceRequirementResult.OutOfDiskSpace;
+                            string filePath = SaveUtilities.GetSavePath(saveID);
+                            // Delete the file as it hasn't been written fully due to insufficient storage
+                            try
+                            {
+                                if (File.Exists(filePath))
+                                {
+                                    File.Delete(filePath);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogWarning("SaveGameManager (LoadSave) :: Unable to delete " + filePath + " - " + e.Message);
+                            }
+                            break;
+                    }
+                }
+                else
+                {
+                    //TODO we may have to re-reserve space if the size of the save file as gone up!
+                    result = SpaceRequirementResult.OK;
+                }
+            }
+            return result;
+        }
+
         public void RegisterSaveSystem(SaveSystem saveSystem)
         {
             if (!m_saveSystems.ContainsKey(saveSystem.name))

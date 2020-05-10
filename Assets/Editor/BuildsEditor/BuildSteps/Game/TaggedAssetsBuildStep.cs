@@ -8,6 +8,37 @@ using UnityEngine;
 
 namespace SoftLiu.Build
 {
+    [CreateAssetMenu]
+    public class CreateBundleFile : ScriptableObject
+    {
+        [Serializable]
+        public class DirectoryBundleInfo
+        {
+            /// <summary>
+            /// 当前文件夹内的 bundle 文件夹名字(小写) , 后面会 是连接文件的名字
+            /// </summary>
+            [SerializeField]
+            private string m_bundleNameWithoutFile;
+            public string bundleNameWithoutFile { get { return m_bundleNameWithoutFile; } }
+            /// <summary>
+            /// 文件夹路径， 文件夹内所有的文件 (.meta 除外) 都会打成 AssetBundle
+            /// </summary>
+            [SerializeField]
+            private string m_filePath;
+            public string filePath { get { return m_filePath; } }
+            /// <summary>
+            /// 生成的 Asset 文件存放的位置
+            /// </summary>
+            [SerializeField]
+            private string m_saveAssetPath;
+            public string saveAssetPath { get { return m_saveAssetPath; } }
+        }
+
+        [SerializeField]
+        private DirectoryBundleInfo[] m_directoryInfos;
+        public DirectoryBundleInfo[] directoryInfos { get { return m_directoryInfos; } }
+    }
+
     public class TaggedAssetsBuildStep : IBuildStep
     {
         public void Execute(BuildTarget target, BuildType type, string path)
@@ -29,8 +60,10 @@ namespace SoftLiu.Build
         public static void EnableAssetBundles()
         {
             AssetDatabase.StartAssetEditing();
+
             AddAllBundleNames();
             AddAssetBundleDefines();
+
             AssetDatabase.StopAssetEditing();
             AssetDatabase.Refresh();
             AssetDatabase.SaveAssets();
@@ -45,24 +78,44 @@ namespace SoftLiu.Build
 
         private static void AddAllBundleNames()
         {
+#if UNITY_EDITOR
             Debug.Log("BundleNames: Start.");
-            string resourcesPath = "Assets/Resources/AssetBundles/";
-            string scripatblePath = resourcesPath + "AssetBundleData.asset";
 
-            AssetBundleData assetBundleData = (AssetBundleData)AssetDatabase.LoadAssetAtPath(scripatblePath, typeof(AssetBundleData));
 
-            foreach (Bundle bundle in assetBundleData.Bundles)
+
+            //EditorUtility.ClearProgressBar();
+            //return;
+            try
             {
-                if (bundle == null) continue;
-                foreach (string path in bundle.assetPaths)
+                string resourcesPath = "Assets/Resources/AssetBundles/";
+                string scripatblePath = resourcesPath + "AssetBundleData.asset";
+
+                AssetBundleData assetBundleData = (AssetBundleData)AssetDatabase.LoadAssetAtPath(scripatblePath, typeof(AssetBundleData));
+
+                string createBundlePath = "Assets/Misc/AssetBundle/CreateBundleFile.asset";
+                CreateBundleFile createBundleData = (CreateBundleFile)AssetDatabase.LoadAssetAtPath(createBundlePath, typeof(CreateBundleFile));
+
+                List<Bundle> bundles = new List<Bundle>();
+                for (int i = 0; i < createBundleData.directoryInfos.Length; i++)
                 {
-
+                    CreateBundleFile.DirectoryBundleInfo bundleInfo = createBundleData.directoryInfos[i];
+                    bundles.AddRange(CreateBundle(bundleInfo.bundleNameWithoutFile, bundleInfo.filePath, bundleInfo.saveAssetPath, (name) =>
+                    {
+                        UnityEditor.EditorUtility.DisplayProgressBar("CreateSingletonMonoBundle", name, i + 1 / createBundleData.directoryInfos.Length);
+                    }));
                 }
-                //AssetImporter importer = AssetImporter.GetAtPath(bundle.);
-                //string bundleName = string.Format("{0}/{1}/{2}", dirInfo.Parent.Name, dirInfo.Name, Path.GetFileNameWithoutExtension(file.FullName));
-                //Debug.Log("BundleNames: " + bundleName);
 
+                assetBundleData.Bundles = bundles.ToArray();
             }
+            catch (Exception error)
+            {
+                Debug.LogError("AddAllBundleNames Error: " + error.Message);
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+            }
+#endif
         }
 
         [MenuItem("SoftLiu/AssetBundles/DISABLE BUNDLES/All")]
@@ -76,25 +129,30 @@ namespace SoftLiu.Build
             AssetDatabase.SaveAssets();
         }
 
-
-        private static void CreateSingletonMonoBundle()
+        public static List<Bundle> CreateBundle(string bundleName, string filePath, string assetPath, System.Action<string> callback)
         {
-            string resourcesPath = "Assets/Resources/AssetBundles/";
-            string scripatblePath = resourcesPath + "AssetBundleData.asset";
+            List<Bundle> bundles = new List<Bundle>();
 
-            AssetBundleData assetBundleData = (AssetBundleData)AssetDatabase.LoadAssetAtPath(scripatblePath, typeof(AssetBundleData));
+            DirectoryInfo dir = new DirectoryInfo(filePath);
 
-            SingletonMonoBundle asset = ScriptableObject.CreateInstance<SingletonMonoBundle>();
-            string path1 = "Prefabs/SingletonMono";
-            string path2 = Path.Combine(Application.dataPath, path1);
-            DirectoryInfo dir = new DirectoryInfo(path2);
             foreach (var item in dir.GetFiles())
             {
+                //FileInfo item = new FileInfo(path2 + "/App.prefab");
                 if (item.Extension == ".meta") continue;
-
+                string withoutEx = Path.GetFileNameWithoutExtension(item.FullName);
+                if (callback != null) callback(withoutEx);
+                string name = bundleName + "/" + withoutEx.ToLower();
+                AssetImporter importer = AssetImporter.GetAtPath(filePath + "/" + item.Name);
+                importer.assetBundleName = bundleName;
+                string assetFilePath = assetPath + "/" + withoutEx + "BundleData.asset";
+                if (File.Exists(assetFilePath)) File.Delete(assetFilePath);
+                SingletonMonoBundle asset = ScriptableObject.CreateInstance<SingletonMonoBundle>();
+                AssetDatabase.CreateAsset(asset, assetFilePath);
+                AssetDatabase.SaveAssets();
+                asset.InitData(bundleName, new string[] { importer.assetPath }, withoutEx);
+                bundles.Add(asset);
             }
-            AssetDatabase.CreateAsset(asset, path1);
-
+            return bundles;
         }
 
         private static void RemoveAllBundleNames()

@@ -1,138 +1,24 @@
-﻿using System;
-using Random = UnityEngine.Random;
-
-namespace CodeStage.AntiCheat.ObscuredTypes
-{
-	/// <summary>
-	/// Use it instead of regular <c>byte</c> for any cheating-sensitive variables.
-	/// </summary>
-	/// <strong><em>Regular type is faster and memory wiser comparing to the obscured one!</em></strong>
-	[Serializable]
-	public struct ObscuredByte : IEquatable<ObscuredByte>, IFormattable
-	{
-		private static byte cryptoKey = 244;
-
-#if UNITY_EDITOR
-		// For internal Editor usage only (may be useful for drawers).
-		public static byte cryptoKeyEditor = cryptoKey;
-#endif
-
-		private byte currentCryptoKey;
-		private byte hiddenValue;
-		private byte fakeValue;
-		private bool inited;
-
-		private ObscuredByte(byte value)
-		{
-			currentCryptoKey = cryptoKey;
-			hiddenValue = value;
-			fakeValue = 0;
-			inited = true;
+﻿using System;using Random = UnityEngine.Random;
+namespace CodeStage.AntiCheat.ObscuredTypes{	/// <summary>	/// Use it instead of regular <c>byte</c> for any cheating-sensitive variables.	/// </summary>	/// <strong><em>Regular type is faster and memory wiser comparing to the obscured one!</em></strong>	[Serializable]	public struct ObscuredByte : IEquatable<ObscuredByte>, IFormattable	{		private static byte cryptoKey = 244;#if UNITY_EDITOR		// For internal Editor usage only (may be useful for drawers).		public static byte cryptoKeyEditor = cryptoKey;#endif		private byte currentCryptoKey;		private byte hiddenValue;		private byte fakeValue;		private bool inited;		private ObscuredByte(byte value)		{			currentCryptoKey = cryptoKey;			hiddenValue = value;			fakeValue = 0;			inited = true;		}
+		/// <summary>		/// Allows to change default crypto key of this type instances. All new instances will use specified key.<br/>		/// All current instances will use previous key unless you call ApplyNewCryptoKey() on them explicitly.		/// </summary>		public static void SetNewCryptoKey(byte newKey)		{			cryptoKey = newKey;		}		/// <summary>		/// Simple symmetric encryption, uses default crypto key.		/// </summary>		/// <returns>Encrypted or decrypted <c>byte</c> (depending on what <c>byte</c> was passed to the function)</returns>		public static byte EncryptDecrypt(byte value)		{			return EncryptDecrypt(value, 0);		}		/// <summary>		/// Simple symmetric encryption, uses passed crypto key.		/// </summary>		/// <returns>Encrypted or decrypted <c>byte</c> (depending on what <c>byte</c> was passed to the function)</returns>		public static byte EncryptDecrypt(byte value, byte key)		{			if (key == 0)			{				return (byte)(value ^ cryptoKey);			}			return (byte)(value ^ key);		}
+		/// <summary>		/// Use it after SetNewCryptoKey() to re-encrypt current instance using new crypto key.		/// </summary>		public void ApplyNewCryptoKey()		{			if (currentCryptoKey != cryptoKey)			{				hiddenValue = EncryptDecrypt(InternalDecrypt(), cryptoKey);				currentCryptoKey = cryptoKey;			}		}
+		/// <summary>		/// Allows to change current crypto key to the new random value and re-encrypt variable using it.		/// Use it for extra protection against 'unknown value' search.		/// Just call it sometimes when your variable doesn't change to fool the cheater.		/// </summary>		public void RandomizeCryptoKey()		{			byte decrypted = InternalDecrypt();			// here we just use first 8 bits of the integer			currentCryptoKey = (byte)Random.Range(0, 255);			hiddenValue = EncryptDecrypt(decrypted, currentCryptoKey);		}
+		/// <summary>		/// Allows to pick current obscured value as is.		/// </summary>		/// Use it in conjunction with SetEncrypted().<br/>		/// Useful for saving data in obscured state.		public byte GetEncrypted()		{			ApplyNewCryptoKey();			return hiddenValue;		}
+		/// <summary>		/// Allows to explicitly set current obscured value.		/// </summary>		/// Use it in conjunction with GetEncrypted().<br/>		/// Useful for loading data stored in obscured state.		public void SetEncrypted(byte encrypted)		{			inited = true;			hiddenValue = encrypted;			if (Detectors.ObscuredCheatingDetector.IsRunning)			{				fakeValue = InternalDecrypt();			}		}
+		private byte InternalDecrypt()		{
+			if (!inited)
+			{
+				currentCryptoKey = cryptoKey;
+				hiddenValue = EncryptDecrypt(0);
+				fakeValue = 0;
+				inited = true;
+			}
+			byte decrypted = EncryptDecrypt(hiddenValue, currentCryptoKey);
+			if (Detectors.ObscuredCheatingDetector.IsRunning && fakeValue != 0 && decrypted != fakeValue)
+			{
+				Detectors.ObscuredCheatingDetector.Instance.OnCheatingDetected();
+			}			return decrypted;
 		}
-
-		/// <summary>
-		/// Allows to change default crypto key of this type instances. All new instances will use specified key.<br/>
-		/// All current instances will use previous key unless you call ApplyNewCryptoKey() on them explicitly.
-		/// </summary>
-		public static void SetNewCryptoKey(byte newKey)
-		{
-			cryptoKey = newKey;
-		}
-
-		/// <summary>
-		/// Simple symmetric encryption, uses default crypto key.
-		/// </summary>
-		/// <returns>Encrypted or decrypted <c>byte</c> (depending on what <c>byte</c> was passed to the function)</returns>
-		public static byte EncryptDecrypt(byte value)
-		{
-			return EncryptDecrypt(value, 0);
-		}
-
-		/// <summary>
-		/// Simple symmetric encryption, uses passed crypto key.
-		/// </summary>
-		/// <returns>Encrypted or decrypted <c>byte</c> (depending on what <c>byte</c> was passed to the function)</returns>
-		public static byte EncryptDecrypt(byte value, byte key)
-		{
-			if (key == 0)
-			{
-				return (byte)(value ^ cryptoKey);
-			}
-			return (byte)(value ^ key);
-		}
-
-		/// <summary>
-		/// Use it after SetNewCryptoKey() to re-encrypt current instance using new crypto key.
-		/// </summary>
-		public void ApplyNewCryptoKey()
-		{
-			if (currentCryptoKey != cryptoKey)
-			{
-				hiddenValue = EncryptDecrypt(InternalDecrypt(), cryptoKey);
-				currentCryptoKey = cryptoKey;
-			}
-		}
-
-		/// <summary>
-		/// Allows to change current crypto key to the new random value and re-encrypt variable using it.
-		/// Use it for extra protection against 'unknown value' search.
-		/// Just call it sometimes when your variable doesn't change to fool the cheater.
-		/// </summary>
-		public void RandomizeCryptoKey()
-		{
-			byte decrypted = InternalDecrypt();
-
-			// here we just use first 8 bits of the integer
-			currentCryptoKey = (byte)Random.Range(0, 255);
-			hiddenValue = EncryptDecrypt(decrypted, currentCryptoKey);
-		}
-
-		/// <summary>
-		/// Allows to pick current obscured value as is.
-		/// </summary>
-		/// Use it in conjunction with SetEncrypted().<br/>
-		/// Useful for saving data in obscured state.
-		public byte GetEncrypted()
-		{
-			ApplyNewCryptoKey();
-			return hiddenValue;
-		}
-
-		/// <summary>
-		/// Allows to explicitly set current obscured value.
-		/// </summary>
-		/// Use it in conjunction with GetEncrypted().<br/>
-		/// Useful for loading data stored in obscured state.
-		public void SetEncrypted(byte encrypted)
-		{
-			inited = true;
-			hiddenValue = encrypted;
-			if (Detectors.ObscuredCheatingDetector.IsRunning)
-			{
-				fakeValue = InternalDecrypt();
-			}
-		}
-
-		private byte InternalDecrypt()
-		{
-			if (!inited)
-			{
-				currentCryptoKey = cryptoKey;
-				hiddenValue = EncryptDecrypt(0);
-				fakeValue = 0;
-				inited = true;
-			}
-
-			byte decrypted = EncryptDecrypt(hiddenValue, currentCryptoKey);
-
-			if (Detectors.ObscuredCheatingDetector.IsRunning && fakeValue != 0 && decrypted != fakeValue)
-			{
-				Detectors.ObscuredCheatingDetector.Instance.OnCheatingDetected();
-			}
-
-			return decrypted;
-		}
-
 		#region operators, overrides, interface implementations
 		//! @cond
 		public static implicit operator ObscuredByte(byte value)
@@ -273,6 +159,6 @@ namespace CodeStage.AntiCheat.ObscuredTypes
 		}
 
 		//! @endcond
-		#endregion
-	}
+		#endregion
+	}
 }

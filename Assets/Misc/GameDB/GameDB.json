@@ -7,5 +7,20 @@
       "m_tickets": 0,
       "m_pearls": 0
     }
+  ],
+
+  "EnemyData": [
+    {
+      "m_key": "Bee",
+      "m_blood": 100,
+      "m_attack": 2.0,
+      "m_move": 2.2
+    },
+    {
+      "m_key": "Mouse",
+      "m_blood": 100,
+      "m_attack": 2.1,
+      "m_move": 2.5
+    }
   ]
 }

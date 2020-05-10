@@ -1,5 +1,6 @@
 ﻿using SoftLiu.Save;
 using SoftLiu.Utilities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,11 @@ namespace SoftLiu.Authentication
         {
             get { return m_deviceToken; }
         }
+
+        public bool IsServerTimeValid { get; private set; }
+
+        private float m_serverTimeUpdatedSecondsSinceStartup = 0;
+
         private User m_user = null;
         public User User
         {
@@ -25,11 +31,31 @@ namespace SoftLiu.Authentication
             m_deviceToken = new DeviceToken();
             if (m_user == null)
             {
-                m_user = new User();                
+                m_user = new User();
                 m_user.Load();
                 m_user.saveID = m_deviceToken.deviceToken;
                 m_user.Save();
             }
+        }
+
+        public DateTime UpdatedServerDateTimeUtc
+        {
+            get
+            {
+                float secondsSinceUpdated = Mathf.Max(0, Time.realtimeSinceStartup - m_serverTimeUpdatedSecondsSinceStartup);
+                TimeSpan timeSpanSinceUpdated = TimeSpan.FromSeconds(secondsSinceUpdated);
+                return DateTime.UtcNow + timeSpanSinceUpdated;
+            }
+        }
+
+        public int GetCurrentUnixTimestampWithServerTimeAsPriority()
+        {
+            int now = Globals.GetUnixTimestamp();
+            if (IsServerTimeValid)
+            {
+                now = (int)(UpdatedServerDateTimeUtc.Subtract(new DateTime(1970,1,1)).TotalSeconds);
+            }
+            return now;
         }
     }
 }
