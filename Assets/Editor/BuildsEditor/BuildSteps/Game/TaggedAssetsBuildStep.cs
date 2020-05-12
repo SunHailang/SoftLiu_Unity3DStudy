@@ -173,5 +173,25 @@ namespace SoftLiu.Build
             PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildPipeline.GetBuildTargetGroup(EditorUserBuildSettings.activeBuildTarget), defines);
         }
 
+
+        public static void SetupBundles()
+        {
+            string resourcesPath = "Assets/Resources/AssetBundles/";
+            string scripatblePath = resourcesPath + "AssetBundleData.asset";
+
+            AssetBundleData assetBundleData = (AssetBundleData)AssetDatabase.LoadAssetAtPath(scripatblePath, typeof(AssetBundleData));
+
+            if (assetBundleData != null)
+            {
+                for (int i = 0; i < assetBundleData.Bundles.Length; i++)
+                {
+                    assetBundleData.Bundles[i].EnableBundle();
+                }
+            }
+            else
+            {
+                Debug.LogError("assetBundleData could not be loaded");
+            }
+        }
     }
 }
