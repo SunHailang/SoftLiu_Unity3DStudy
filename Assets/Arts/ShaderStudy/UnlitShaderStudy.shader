@@ -49,7 +49,7 @@
 				return o;
 			}
 			
-			fixed4 frag(vertOut o) ： SV_Target
+			fixed4 frag(vertOut o) : SV_Target
 			{
 				return o.col;
 			}

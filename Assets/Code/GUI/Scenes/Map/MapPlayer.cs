@@ -41,18 +41,22 @@ public class MapPlayer : MonoBehaviour
                     m_alreadyPingList.Add(raycastHit2D.collider);
                     // TODO
                     Debug.Log("Hit Object: " + raycastHit2D.collider.name);
+                    PingPoint ping = null;
                     switch (raycastHit2D.transform.tag)
                     {
                         case "Enemy":
+                            ping = Instantiate(m_pingPoint, raycastHit2D.transform);
                             break;
                         case "":
                             break;
                         default:
                             break;
                     }
-                    PingPoint ping = Instantiate(m_pingPoint, raycastHit2D.transform);
-                    ping.transform.position = raycastHit2D.point;
-                    ping.SetColor(Color.red);
+                    if (ping != null)
+                    {
+                        ping.transform.position = raycastHit2D.point;
+                        ping.SetColor(Color.red);
+                    }
                 }
             }
         }

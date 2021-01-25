@@ -45,7 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_entryPrefabs:
   - type: App
-    prefab: {fileID: 911256135908301429, guid: aeb4cbfaf30f2c3478832beef80d0e6b, type: 3}
+    prefab: {fileID: 4597560884038020380, guid: aeb4cbfaf30f2c3478832beef80d0e6b,
+      type: 3}
   - type: UIPingFPS
     prefab: {fileID: 5038138273045593867, guid: 68b9fd1d80b52484b951b58c5d34dd4d,
       type: 3}

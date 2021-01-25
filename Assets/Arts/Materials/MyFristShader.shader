@@ -12,12 +12,21 @@
 		Tags
 		{
 			"Queue" = "Geometry"
+			"LightMode" = "ForwardBase"
 		}
 
 		Pass
 		{
+			// 剔除背面多边形  Back、Front、Off
+			Cull Back
 			Blend SrcAlpha OneMinusSrcAlpha
+			// 控制是否将此对象的像素写入深度缓冲区（默认值为 _On_） 如果要绘制半透明效果，请切换到 ZWrite Off
 			ZWrite off
+			// 深度测试。默认值为 _LEqual_
+			ZTest Less
+			ColorMask RGBA
+			
+			
 
 			CGPROGRAM
 			#pragma vertex vert
@@ -27,6 +36,7 @@
 			fixed4 _Color1;
 			fixed4 _Color2;
 			int _Int;
+
 
 			struct appdata
 			{
