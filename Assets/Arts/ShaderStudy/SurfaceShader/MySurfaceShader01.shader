@@ -1,4 +1,4 @@
-﻿Shader "SoftLiu/Custom/MySurfaceShader"
+﻿Shader "SoftLiu/Custom/MySurfaceShader01"
 {
     Properties
     {
@@ -27,9 +27,6 @@
         // 尽量使用最小数目的Pass
         Pass
         {
-            //[Name]
-            //[Tags]
-
             CGPROGRAM
 
             ENDCG

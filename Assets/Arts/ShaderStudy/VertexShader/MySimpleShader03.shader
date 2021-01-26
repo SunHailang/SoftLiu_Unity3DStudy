@@ -9,6 +9,10 @@
 // 设置渲染状态：设置网络是怎么渲染的。
 // DrawCall: 渲染命令，从CPU发出GPU接收执行
 
+// 顶点着色器语义： 
+// SV_Target： 返回类型为 fixed4（低精度 RGBA 颜色）
+// SV_TargetN：多个渲染目标
+// SV_Depth：像素着色器深度输出  值必须为单个 float。
 Shader "SoftLiu/Unlit/MySimpleShader03"
 {
     Properties
@@ -18,15 +22,32 @@ Shader "SoftLiu/Unlit/MySimpleShader03"
     }
     SubShader
     {
+        Tags
+        {
+            //"Queue" = "Background" // 1000
+            //"Queue" = "Geometry" // 2000 (默认值)
+            //"Queue" = "AlphaTest" // 2450
+            "Queue" = "Transparent" // 3000 此渲染队列在 Geometry 和 AlphaTest 之后渲染，按照从后到前的顺序。
+            //"Queue" = "Overlay" // 4000
+
+            "RenderType" = "Queue"
+        }
+
         Pass
         {
+            //#pragma 
+            ZWrite Off
+            LOD 200
+
             CGPROGRAM
+            // CG 与 HLSL 代码
+            //#pragma surface surf Lambert
             // 定义 顶点着色器函数
             #pragma vertex vert
             // 定义片源着色器函数
             #pragma fragment frag
             // 最低支持版本
-            #pragma target 3.0
+            #pragma target 3.0            
 
             // 在CG程序中定义一个与属性名称和类型都一样的变量
             // 定义输入的颜色
@@ -53,7 +74,7 @@ Shader "SoftLiu/Unlit/MySimpleShader03"
                 fixed3 color : COLOR0;
             };
 
-            v2f vert(a2v v) : POSITION
+            v2f vert(a2v v)
             {
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
@@ -71,7 +92,7 @@ Shader "SoftLiu/Unlit/MySimpleShader03"
                 // 表示两个向量各分量相乘
                 fixed3 color = c * _Color.rgb;
 
-                return fixed4(color, 1.0);
+                return fixed4(color, 0.5);
             }
 
             ENDCG

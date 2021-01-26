@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MySimpleShader
-  m_Shader: {fileID: 4800000, guid: 8532d6885004c3c42a2592bcd26e41b8, type: 3}
+  m_Shader: {fileID: 4800000, guid: f93f3bff698f0234d815f73e523879ea, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +19,9 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
-    m_Floats: []
+    m_Floats:
+    - _Shininess: 64
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0.8133382, g: 1, b: 0.7971698, a: 1}
+    - _SpacularColor: {r: 1, g: 1, b: 1, a: 1}
