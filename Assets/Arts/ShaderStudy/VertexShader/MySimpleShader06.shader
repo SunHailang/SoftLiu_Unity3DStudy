@@ -25,6 +25,15 @@
         {
             Tags
             {
+                // 投射阴影
+                "LightMode" = "ShadowCaster"
+            }
+        }
+
+        Pass
+        {
+            Tags
+            {
                 //"LightMode" = "Vertex"
                 "LightMode" = "ForwardBase"
             }
@@ -69,6 +78,7 @@
                 float3 normal : NORMAL;
 
                 float4 vertex : COLOR;
+
             };
 
             v2f vert(appdata_base v)
@@ -121,5 +131,5 @@
             ENDCG
         }
     }
-    //FallBack "Diffuse"
+    FallBack "Diffuse"
 }
