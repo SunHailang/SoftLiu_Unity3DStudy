@@ -28,9 +28,9 @@ public class IngameHDU : MonoBehaviour
     {
         EventManager<Events>.Instance.RegisterEvent(Events.GameStart, OnGameStart);
 
-        Player activePlayer = App.Instance.GetActivePlayer();
-        SoftLiu.Assert.Fatal(activePlayer != null, "Active Player is null.");
-        m_playerController = activePlayer;
+        // Player activePlayer = App.Instance.GetActivePlayer();
+        // SoftLiu.Assert.Fatal(activePlayer != null, "Active Player is null.");
+        //m_playerController = activePlayer;
         m_btnStartPause.interactable = false;
         m_btnPauseImage.SetActive(true);
         m_btnStartImage.SetActive(false);

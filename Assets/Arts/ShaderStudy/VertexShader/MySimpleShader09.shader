@@ -71,9 +71,9 @@
             fixed4 frag(v2f i) : SV_TARGET // 等同于 Color
             {
                 float2 uv = i.uv;
-                uv.x -= _Time.x * 10;
-                if(saturate(uv.x) == 0.0) uv.x = 1.0;
-                else if(saturate(uv.x) == 1.0) uv.x = 0.0;
+                uv.x -= _Time.x;
+                if(uv.x <= 0.0) uv.x = (1.0 - uv.x);
+                //else if(saturate(uv.x) == 1.0) uv.x = 0.0;
                 fixed4 color = tex2D(_MainTex, uv);
 
                 

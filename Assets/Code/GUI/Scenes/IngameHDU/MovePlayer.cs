@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MovePlayer : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class MovePlayer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField]
     private RectTransform m_moveForward = null;
@@ -21,6 +21,13 @@ public class MovePlayer : MonoBehaviour, IPointerDownHandler, IBeginDragHandler,
     public void OnPointerDown(PointerEventData eventData)
     {
         SetPosition(eventData, m_moveForward);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        m_moveForward.localPosition = Vector3.zero;
+
+        playerMoveDirection = Vector3.zero;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -41,6 +48,8 @@ public class MovePlayer : MonoBehaviour, IPointerDownHandler, IBeginDragHandler,
 
         playerMoveDirection = Vector3.zero;
     }
+
+    
 
     private void SetPosition(PointerEventData eventData, RectTransform rect)
     {
