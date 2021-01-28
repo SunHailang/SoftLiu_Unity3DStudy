@@ -21,6 +21,6 @@ public class ShaderTest : MonoBehaviour
     {
         float value = Mathf.PingPong(Time.time * speed, 50);
         m_myMater.SetFloat("_Int", value);
-        Debug.Log("value = " + value);
+        //Debug.Log("value = " + value);
     }
 }

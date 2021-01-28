@@ -74,8 +74,8 @@
 			fixed4 frag(v2f i):SV_Target
 			{
 				//fixed col = checker(i.uv);
-
 				float2 reUV = floor(i.uv * floor(_Int))/2;
+				// reUV.x += -_Time.x * 10;
 				float minUV = frac(reUV.x + reUV.y);
 				fixed4 col = lerp(_Color1, _Color2, step(0.5, minUV.x));
 				// 光栅化阶段中的片段着色器
