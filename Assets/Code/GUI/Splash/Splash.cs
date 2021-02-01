@@ -10,11 +10,14 @@ using SoftLiu.Localization;
 using SoftLiu.SceneManagers;
 using SoftLiu.Save;
 using SoftLiu.Authentication;
+using UnityEngine.EventSystems;
 
-public class Splash : MonoBehaviour
+public class Splash : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
     private TextMeshProUGUI m_text = null;
+    [SerializeField]
+    private Material m_bgMaterial = null;
 
     private void Awake()
     {
@@ -31,7 +34,15 @@ public class Splash : MonoBehaviour
     float m_frame = 0;
     private void Update()
     {
+        // 获取鼠标位置
+        
+    }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("Location Pos:" + eventData.position);
+        Debug.Log("World Pos:" + eventData.pointerCurrentRaycast.worldPosition);
+        Debug.Log("Screen Pos:" + eventData.pointerCurrentRaycast.screenPosition);
     }
 
     public void OnClick()
