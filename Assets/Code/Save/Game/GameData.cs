@@ -116,7 +116,7 @@ public partial class GameData : ScriptableObject
             ApplyData(obj, data, "", "");
             try
             {
-                   (obj as ObjectData).Init();
+                (obj as ObjectData).Init();
             }
             catch (System.Exception) { }
             list.Add(obj);

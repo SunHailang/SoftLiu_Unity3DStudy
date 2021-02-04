@@ -65,5 +65,11 @@ public class SoftLiuEditor
             UnityEngine.Debug.LogError("FontsTextUpdate Error: " + error.Message);
         }
     }
+
+    [MenuItem("SoftLiu/Save/PlayerPrefs/Clear", priority = 2)]
+    public static void PlayerPrefsClear()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }
 

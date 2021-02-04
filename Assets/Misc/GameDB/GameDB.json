@@ -1,4 +1,4 @@
-{
+﻿{
   "PlayerInitData": [
     {
       "m_key": "player",
@@ -21,6 +21,44 @@
       "m_blood": 100,
       "m_attack": 2.1,
       "m_move": 2.5
+    }
+  ],
+
+  "ServerSocketData": [
+    {
+      "m_key": "UbisoftTCP",
+      "m_name": "Ubisoft",
+      "m_type": "TCP",
+      "m_serverIP": "10.192.91.40",
+      "m_serverPort": 11060
+    },
+    {
+      "m_key": "UbisoftUbuntuTCP",
+      "m_name": "UbisoftUbuntu",
+      "m_type": "TCP",
+      "m_serverIP": "192.168.218.129",
+      "m_serverPort": 30010
+    },
+    {
+      "m_key": "SunHaiLangTCP",
+      "m_name": "SunHaiLang",
+      "m_type": "TCP",
+      "m_serverIP": "10.192.91.40",
+      "m_serverPort": 11060
+    },
+    {
+      "m_key": "UbisoftUDP",
+      "m_name": "Ubisoft",
+      "m_type": "UDP",
+      "m_serverIP": "10.192.91.40",
+      "m_serverPort": 11080
+    },
+    {
+      "m_key": "SunHaiLangUDP",
+      "m_name": "SunHaiLang",
+      "m_type": "UDP",
+      "m_serverIP": "10.192.91.40",
+      "m_serverPort": 11080
     }
   ]
 }

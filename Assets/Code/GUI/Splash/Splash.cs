@@ -27,11 +27,26 @@ public class Splash : MonoBehaviour, IPointerClickHandler
     // Use this for initialization
     private void Start()
     {
+        StartCoroutine(InitGameData());
+    }
+
+    private IEnumerator InitGameData()
+    {
+        // load game data
+        GameDataManager.Instance.LoadGameData();
+
+        yield return null;
+
         SaveFacade.Instance.Init();
+
         SaveGameManager.Instance.Load(Authenticator.Instance.User);
+
+        yield return null;
+        App.Instance.Init();
+
         
     }
-    float m_frame = 0;
+   
     private void Update()
     {
         // 获取鼠标位置

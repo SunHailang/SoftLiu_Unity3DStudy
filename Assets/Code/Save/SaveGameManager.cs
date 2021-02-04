@@ -195,7 +195,7 @@ namespace SoftLiu.Save
                 switch (loadResult)
                 {
                     case LoadState.NotFound:
-                        if (save.Key != LocalSaveID)
+                        if (save.Key == LocalSaveID)
                         {
                             Debug.Log("SaveGameManager (LoadSave) :: Haven't found save for saveID - " + saveID + " attempting to load local.sav instead!");
 

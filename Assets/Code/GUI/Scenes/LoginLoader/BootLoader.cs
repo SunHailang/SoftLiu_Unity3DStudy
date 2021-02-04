@@ -22,6 +22,7 @@ public class BootLoader : MonoBehaviour
     private Image m_sliderForward = null;
     [SerializeField]
     private UILocalize m_textMessage = null;
+   
 
     string m_assetBundlesPath = null;
 
@@ -35,9 +36,9 @@ public class BootLoader : MonoBehaviour
     {
         m_persistentDataPath = NativeBinding.Instance.GetPersistentDataPath();
         m_assetBundlePath = Path.Combine(m_persistentDataPath, "ABFile/");
-
-        App.Instance.Init();
     }
+
+    
 
     private void OnEnable()
     {
@@ -73,7 +74,16 @@ public class BootLoader : MonoBehaviour
             m_locationFileList = GetCRCFileList(localCRC);
             Debug.Log("m_locationFileList Length: " + m_locationFileList.Count);
         }
+        // load game db
+        //StartCoroutine(LoadDatabase());
+        // load next scene
         StartCoroutine(LoadFrontEnd());
+    }
+
+    private IEnumerator LoadDatabase()
+    {
+        yield return null;
+        SaveFacade.Instance.LoadGameDB();
     }
 
     private IEnumerator LoadFrontEnd()
@@ -100,10 +110,6 @@ public class BootLoader : MonoBehaviour
             yield return null;
         }
         async.allowSceneActivation = true;
-        while (!async.isDone)
-        {
-            yield return null;
-        }
         m_sliderForward.fillAmount = 1.0f;
     }
 
@@ -308,5 +314,10 @@ public class BootLoader : MonoBehaviour
             }
             ab.Unload(true);
         }
+    }
+
+    private void OnDestroy()
+    {
+        // Deregister Event
     }
 }

@@ -66,7 +66,7 @@ public static class Globals
 
     public static string GetApplicationVersion(bool useOverrideVersion = false)
     {
-        string version = "1.0.1";/*FGOL.Plugins.Native.NativeBinding.Instance.GetBundleVersion()*/;
+        string version = SoftLiu.Plugins.Native.NativeBinding.Instance.GetBundleVersion();
 
 #if !PRODUCTION
         if (string.IsNullOrEmpty(s_debugOverrideVersion) && useOverrideVersion == true)

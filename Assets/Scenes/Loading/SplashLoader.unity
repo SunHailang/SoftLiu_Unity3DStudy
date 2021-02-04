@@ -1238,6 +1238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_text: {fileID: 1213000863}
+  m_bgMaterial: {fileID: 0}
 --- !u!114 &842984543
 MonoBehaviour:
   m_ObjectHideFlags: 0

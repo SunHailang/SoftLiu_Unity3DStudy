@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Definitions;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerInitData
+public class PlayerInitData : ObjectData
 {
     [SerializeField]
     private System.String m_key;

@@ -8,9 +8,12 @@ public partial class GameData : ScriptableObject
 
     [SerializeField]
     List<PlayerInitData> m_playerInitData;
+
     [SerializeField]
     List<EnemyData> m_enemyData;
 
+    [SerializeField]
+    List<ServerSocketData> m_serverSocketData;
 
     private void Import(Dictionary<string, object> dict)
     {
@@ -21,6 +24,10 @@ public partial class GameData : ScriptableObject
         if(dict.ContainsKey("EnemyData"))
         {
             m_enemyData = CreateInstances<EnemyData>(dict["EnemyData"] as List<object>);
+        }
+        if(dict.ContainsKey("ServerSocketData"))
+        {
+            m_serverSocketData = CreateInstances<ServerSocketData>(dict["ServerSocketData"] as List<object>);
         }
     }
 }

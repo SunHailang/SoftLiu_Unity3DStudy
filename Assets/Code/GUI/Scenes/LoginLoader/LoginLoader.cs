@@ -12,6 +12,8 @@ using SoftLiu.Utilities;
 using SoftLiu.Plugins.Native;
 using SoftLiu.SceneManagers;
 using SoftLiu.Authentication;
+using static TMPro.TMP_Dropdown;
+using SoftLiu.Servers;
 
 public class LoginLoader : MonoBehaviour
 {
@@ -25,6 +27,10 @@ public class LoginLoader : MonoBehaviour
     private GameObject m_btnLoginSuccess = null;
     [SerializeField]
     private Toggle m_toggleTourist = null;
+    [Space(10)]
+    [SerializeField]
+    private TMP_Dropdown m_dropdownServer = null;
+
 
     [SerializeField]
     private GameObject m_imageSpinner = null;
@@ -35,6 +41,23 @@ public class LoginLoader : MonoBehaviour
 
     private bool m_logining = false;
 
+    private Dictionary<int, ServerSocketData> m_serverDataDic = new Dictionary<int, ServerSocketData>();
+
+    private void Awake()
+    {
+        m_serverDataDic.Clear();
+        m_dropdownServer.ClearOptions();
+        if (GameDataManager.Instance.gameDB != null) ;
+        {
+            List<ServerSocketData> serverList = GameDataManager.Instance.gameDB.GetItems<ServerSocketData>((data) => { return data.Type == "TCP"; });
+            for (int i = 0; i < serverList.Count; i++)
+            {
+                m_dropdownServer.options.Add(new OptionData(serverList[i].Name));
+                m_serverDataDic.Add(i, serverList[i]);
+            }
+        }
+    }
+
     private void OnEnable()
     {
 
@@ -42,7 +65,6 @@ public class LoginLoader : MonoBehaviour
 
     private void Start()
     {
-        m_btnLoginSuccess.SetActive(false);
         m_loginCanvas = m_loginTransform.GetComponent<CanvasGroup>();
         m_inputFieldUserName.text = "softliu";
         m_inputFieldUserPassword.text = "123456";
@@ -176,7 +198,7 @@ public class LoginLoader : MonoBehaviour
                                     break;
                                 case 0:
                                     // login success , TODO
-                                    m_btnLoginSuccess.SetActive(true);
+                                    
                                     break;
                                 case 1:
                                     // breath success
@@ -219,5 +241,20 @@ public class LoginLoader : MonoBehaviour
             m_imageSpinner.SetActive(false);
 #endif
         }));
+    }
+
+    public void BtnLinkServer_OnClick()
+    {
+
+    }
+
+    public void ServerDropdowm_OnChanged()
+    {
+        int index = m_dropdownServer.value;
+        ServerSocketData socketData = null;        
+        if(m_serverDataDic.TryGetValue(index, out socketData))
+        {
+            RequestsManager.Instance.SetServerSocketData(socketData);
+        }
     }
 }
