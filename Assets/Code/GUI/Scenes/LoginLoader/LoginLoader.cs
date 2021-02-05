@@ -22,15 +22,17 @@ public class LoginLoader : MonoBehaviour
     [SerializeField]
     private TMP_InputField m_inputFieldUserName = null;
     [SerializeField]
-    private TMP_InputField m_inputFieldUserPassword = null;
-    [SerializeField]
-    private GameObject m_btnLoginSuccess = null;
+    private TMP_InputField m_inputFieldUserPassword = null;    
     [SerializeField]
     private Toggle m_toggleTourist = null;
+
     [Space(10)]
     [SerializeField]
+    private GameObject m_serverDataObj = null;
+    [SerializeField]
     private TMP_Dropdown m_dropdownServer = null;
-
+    [SerializeField]
+    private GameObject m_btnLinkServer = null;
 
     [SerializeField]
     private GameObject m_imageSpinner = null;
@@ -60,7 +62,8 @@ public class LoginLoader : MonoBehaviour
 
     private void OnEnable()
     {
-
+        m_serverDataObj.SetActive(true);
+        m_loginTransform.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -245,6 +248,11 @@ public class LoginLoader : MonoBehaviour
 
     public void BtnLinkServer_OnClick()
     {
+        // Socket 连接服务器
+
+        m_serverDataObj.SetActive(false);
+
+        m_loginTransform.gameObject.SetActive(true);
 
     }
 

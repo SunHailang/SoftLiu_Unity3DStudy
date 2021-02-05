@@ -1587,7 +1587,6 @@ GameObject:
   m_Component:
   - component: {fileID: 893531080}
   - component: {fileID: 893531079}
-  - component: {fileID: 893531078}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1595,14 +1594,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &893531078
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 893531077}
-  m_Enabled: 1
 --- !u!20 &893531079
 Camera:
   m_ObjectHideFlags: 0
@@ -2272,7 +2263,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1053979593}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3459,9 +3450,10 @@ MonoBehaviour:
   m_loginTransform: {fileID: 1244454206}
   m_inputFieldUserName: {fileID: 744957121}
   m_inputFieldUserPassword: {fileID: 1348605656}
-  m_btnLoginSuccess: {fileID: 1976506595}
   m_toggleTourist: {fileID: 1540867480}
+  m_serverDataObj: {fileID: 120768710}
   m_dropdownServer: {fileID: 1919308484}
+  m_btnLinkServer: {fileID: 1976506595}
   m_imageSpinner: {fileID: 286519488}
   m_loginRotate: 7
 --- !u!1 &1529685251
@@ -4675,7 +4667,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 858624427}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4783,7 +4775,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4793,10 +4785,11 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 33b00776628496f4e80cf967544d5743,
+      type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 2e8af9c6110b592498314eb0dc7232ec, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: ad79d777d1a39e54896ebec8894d6ed5, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 71e08ed92037c324fa22d16673d5d3ac, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -4838,7 +4831,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ad79d777d1a39e54896ebec8894d6ed5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5b1092e09d0b6fa49869a3f2692ea252, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

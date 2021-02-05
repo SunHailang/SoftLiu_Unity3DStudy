@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DragDropTest.unity
     guid: b6d5500ffcf5729439100006f1a40cea
+  - enabled: 1
+    path: Assets/Scenes/Ingame/SquaresGame.unity
+    guid: c7dff87b4d277ef46815438d548b078d
   m_configObjects: {}
