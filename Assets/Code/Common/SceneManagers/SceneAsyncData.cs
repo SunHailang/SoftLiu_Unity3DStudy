@@ -12,37 +12,50 @@ namespace SoftLiu.SceneManagers
         private string m_name = string.Empty;
         public string Name { get { return m_name; } }
 
-        private AsyncOperation m_sceneAsync = null;
-        public AsyncOperation SceneAsync
+        private List<AsyncOperation> m_sceneAsyncList = null;
+        public List<AsyncOperation> SceneAsyncList
         {
             get
             {
-                return m_sceneAsync;
+                return m_sceneAsyncList;
             }
         }
 
-        public SceneAsyncData(string name, AsyncOperation sceneAsync, System.Action<SceneAsyncData> complete)
+        private float m_process = 0.0f;
+
+        public SceneAsyncData(string name, List<AsyncOperation> sceneAsyncList, System.Action<SceneAsyncData> complete)
         {
             m_name = name;
-            m_sceneAsync = sceneAsync;
+            m_sceneAsyncList = sceneAsyncList;
             m_onFinish = complete;
+            m_process = 0.0f;
         }
 
-        public bool ProcessIfFinished()
+        public float ProcessIfFinished()
         {
-            if (m_sceneAsync == null)
+            if (m_sceneAsyncList == null)
             {
-                return true;
+                return 1.0f;
             }
-            if (m_sceneAsync.isDone)
+            bool isDone = true;
+            foreach (var sceneAsync in m_sceneAsyncList)
+            {
+                if (!sceneAsync.isDone) { isDone = false; }
+                m_process = Mathf.Min(sceneAsync.progress, m_process);
+                m_process = sceneAsync.progress;
+            }
+            if (isDone)
             {
                 if (m_onFinish != null)
                 {
                     m_onFinish(this);
                 }
-                return true;
+                return 1.0f;
             }
-            return false;
+            else
+            {
+                return Mathf.Min(0.89f, m_process);
+            }
         }
     }
 }

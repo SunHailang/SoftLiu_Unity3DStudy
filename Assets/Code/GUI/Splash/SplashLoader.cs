@@ -12,13 +12,8 @@ using SoftLiu.Save;
 using SoftLiu.Authentication;
 using UnityEngine.EventSystems;
 
-public class Splash : MonoBehaviour, IPointerClickHandler
+public class SplashLoader : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField]
-    private TextMeshProUGUI m_text = null;
-    [SerializeField]
-    private Material m_bgMaterial = null;
-
     private void Awake()
     {
 
@@ -44,13 +39,13 @@ public class Splash : MonoBehaviour, IPointerClickHandler
         yield return null;
         App.Instance.Init();
 
-        
+
     }
-   
+
     private void Update()
     {
         // 获取鼠标位置
-        
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -58,37 +53,6 @@ public class Splash : MonoBehaviour, IPointerClickHandler
         Debug.Log("Location Pos:" + eventData.position);
         Debug.Log("World Pos:" + eventData.pointerCurrentRaycast.worldPosition);
         Debug.Log("Screen Pos:" + eventData.pointerCurrentRaycast.screenPosition);
-    }
-
-    public void OnClick()
-    {
-        RequestsManager.Instance.GetServerTime((response) =>
-        {
-            if (string.IsNullOrEmpty(response.error))
-            {
-                Debug.Log(response.response.unixTimestamp);
-                Debug.Log(Time.unscaledTime);
-
-                //SceneManager.LoadScene("Common3D", LoadSceneMode.Additive);
-                bool result = SceneManager.Instance.LoadSceneAsync("Common3D", (data) =>
-                {
-                    Debug.Log(data.Name);
-                    if (data.SceneAsync != null)
-                    {
-                        //data.SceneAsync.allowSceneActivation = true;
-                    }
-                    else
-                    {
-                        Debug.LogError("LoadSceneAsync Error: " + data.Name);
-                    }
-
-                }, UnityEngine.SceneManagement.LoadSceneMode.Additive);
-            }
-            else
-            {
-                Debug.LogError("GetServerTime Error: " + response.error);
-            }
-        });
     }
 
     public void BtnStart_OnClick()

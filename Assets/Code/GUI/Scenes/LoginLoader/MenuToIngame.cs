@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using UnityEngine.SceneManagement;
+using SoftLiu.SceneManagers;
 
 public class MenuToIngame : MonoBehaviour
 {
@@ -15,13 +15,16 @@ public class MenuToIngame : MonoBehaviour
     [SerializeField]
     private Image m_sliderForward = null;
 
+    private void Awake()
+    {
+
+    }
 
     private void OnEnable()
     {
         // Register Event
         EventManager<Events>.Instance.RegisterEvent(Events.HasNotchAndSize, OnHasNotchAndSize);
         m_sliderForward.fillAmount = 0;
-
     }
 
     private void Start()
@@ -32,27 +35,26 @@ public class MenuToIngame : MonoBehaviour
     private IEnumerator LoadStartGame()
     {
         yield return null;
-        AsyncOperation async = SceneManager.LoadSceneAsync("Common3D", LoadSceneMode.Additive);
-        while (!async.isDone)
+
+        SceneStack scene = SceneManager.Instance.CurrentSceneStack;
+        SceneAsyncData scenes = SceneManager.Instance.LoadSceneAsync(scene);
+        float process = 0.0f;
+        bool isDone = false;
+        while (!isDone)
         {
-            m_sliderForward.fillAmount = async.progress;
-            if (async.progress == 0.9f && async.allowSceneActivation)
-            {
-                async.allowSceneActivation = false;
-                break;
-            }
+            process = Mathf.Min(0.9f, scenes.ProcessIfFinished());
+            m_sliderForward.fillAmount = process;
+            if (process == 0.9f) isDone = true;
             yield return null;
         }
-        async.allowSceneActivation = true;
-
-        while (!async.isDone)
+        while (m_sliderForward.fillAmount < 1.0f)
         {
-            yield return null;
+            yield return new WaitForSeconds(0.02f);
+            m_sliderForward.fillAmount += 0.0005f;
         }
-        m_sliderForward.fillAmount = 1f;
-        SceneManager.LoadScene("IngameHDU", LoadSceneMode.Additive);
-
-        SceneManager.UnloadSceneAsync("MenuToIngame");
+        m_sliderForward.fillAmount = 1.0f;
+        if (scene.LoadMode == UnityEngine.SceneManagement.LoadSceneMode.Additive)
+            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("MenuToIngame");
     }
 
     private void Update()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using SoftLiu.SceneManagers;
 
 public class IngameHDU : MonoBehaviour
 {
@@ -68,12 +69,19 @@ public class IngameHDU : MonoBehaviour
         m_btnStartPause.interactable = true;
     }
 
+    #region Button OnClick
+
+    public void BtnBack_OnClick()
+    {
+        SceneManager.Instance.BackSceneAsync();
+    }
 
     public void BtnPause_OnClick()
     {
         App.Instance.Pause = true;
     }
 
+    #endregion
     private void OnDestroy()
     {
         EventManager<Events>.Instance.DeregisterEvent(Events.GameStart, OnGameStart);
