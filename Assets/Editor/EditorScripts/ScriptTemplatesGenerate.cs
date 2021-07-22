@@ -72,8 +72,6 @@ public class ScriptTemplatesGenerate
             scriptContent = scriptContent.Replace("#DATE#", DateTime.Now.ToString("yyyy-MM-dd"));
 
             File.WriteAllText(realPath, scriptContent);
-            //一定要加这句话 不然 在创建之后点击脚本预览发现还是原来模板效果
-            //一开始就是没加这句话 所以有bug 这就导致了第二个方法产生
             AssetDatabase.ImportAsset(newFilePath);
         }
     }
