@@ -1,0 +1,17 @@
+﻿/***********************************
+	_AUTHOR:		#AUTHOR#
+	_DATE:			#DATE#
+	_DESC:			#DESC#
+	_VERSION:       #VERSION#
+	_UNITYVERSION:  #UNITYVERSION#
+************************************/
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public class #SCRIPTNAME# : MonoBehaviour
+{
+    
+}

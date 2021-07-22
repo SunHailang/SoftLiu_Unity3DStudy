@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - BtnBack
+  - Terrain
   layers:
   - Default
   - TransparentFX
