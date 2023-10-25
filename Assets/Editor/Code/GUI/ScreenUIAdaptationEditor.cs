@@ -14,7 +14,7 @@ public class ScreenUIAdaptationEditor : Editor
         {
             foreach (var item in targets)
             {
-                m_screenUI = (ScreenUIAdaptation)item;
+                m_screenUI = (ScreenUIAdaptation) item;
                 if (m_screenUI != null)
                 {
                     RectTransform trans = m_screenUI.GetComponent<RectTransform>();
@@ -26,5 +26,4 @@ public class ScreenUIAdaptationEditor : Editor
             }
         }
     }
-
 }

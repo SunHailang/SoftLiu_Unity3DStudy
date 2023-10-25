@@ -100,7 +100,7 @@ public class ScreenStateTransitioner : StateTransitioner
         else
         {
 #if UNITY_EDITOR
-            EditorUtility.DisplayDialog("CAN'T GO BACK!", "The state you want to go to doesn't exist on the stack!", "OK!");
+            // EditorUtility.DisplayDialog("CAN'T GO BACK!", "The state you want to go to doesn't exist on the stack!", "OK!");
 #endif
         }
     }

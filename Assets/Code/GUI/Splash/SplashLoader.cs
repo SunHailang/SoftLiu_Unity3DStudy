@@ -1,13 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-using SoftLiu.Utilities;
-using SoftLiu.Servers;
-using System;
-using TMPro;
-using SoftLiu.Localization;
-using SoftLiu.SceneManagers;
 using SoftLiu.Save;
 using SoftLiu.Authentication;
 using UnityEngine.EventSystems;

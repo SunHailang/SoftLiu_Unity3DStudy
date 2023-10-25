@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using SoftLiu;
+﻿using UnityEngine;
 using SoftLiu.Event;
-using System;
 using UnityEngine.UI;
 
 namespace SoftLiu.Localization
@@ -61,11 +56,11 @@ namespace SoftLiu.Localization
             string value = Localization.Instance.Get(m_afterKey);
             if (mParams == null)
             {
-                m_text.SetText(value);
+                m_text.text  = value;
             }
             else
             {
-                m_text.SetText(string.Format(value, mParams));
+                m_text.text = string.Format(value, mParams);
             }
         }
 

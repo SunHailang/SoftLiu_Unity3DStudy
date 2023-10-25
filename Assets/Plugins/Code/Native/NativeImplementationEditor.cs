@@ -88,7 +88,7 @@ namespace SoftLiu.Plugins.Native
         public void ShowMessageBox(string title, string message, int msg_id = -1)
         {
 #if UNITY_EDITOR
-            bool result = UnityEditor.EditorUtility.DisplayDialog(title, message, "OK");
+            // bool result = UnityEditor.EditorUtility.DisplayDialog(title, message, "OK");
 
             if (msg_id != -1)
             {
@@ -100,7 +100,7 @@ namespace SoftLiu.Plugins.Native
         public void ShowMessageBoxWithButtons(string title, string message, string ok_button, string cancel_button, int msg_id = -1)
         {
 #if UNITY_EDITOR
-            bool result = UnityEditor.EditorUtility.DisplayDialog(title, message, ok_button, cancel_button);
+            // bool result = UnityEditor.EditorUtility.DisplayDialog(title, message, ok_button, cancel_button);
 
             if (msg_id != -1)
             {

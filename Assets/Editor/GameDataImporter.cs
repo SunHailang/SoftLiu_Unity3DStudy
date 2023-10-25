@@ -12,20 +12,11 @@ public class GameDataImporter
         EditorApplication.playModeStateChanged += OnPlayModeChanged;
     }
 
-    public static string GameDBJsonPath
-    {
-        get { return string.Format("Assets/Misc/{0}.json", GameDataManager.GameDBPath); }
-    }
+    public static string GameDBJsonPath => string.Format("Assets/Misc/{0}.json", GameDataManager.GameDBPath);
 
-    public static string GameAssetDBJsonPath
-    {
-        get { return string.Format("Assets/Resources/{0}.json", /*GameDatabases.GameAssetsDBPath*/0); }
-    }
+    public static string GameAssetDBJsonPath => string.Format("Assets/Resources/{0}.json", /*GameDatabases.GameAssetsDBPath*/0);
 
-    public static string AIDBJsonPath
-    {
-        get { return string.Format("Assets/Resources/{0}.json", /*AIDatabase2.AIDBPath*/0); }
-    }
+    public static string AIDBJsonPath => string.Format("Assets/Resources/{0}.json", /*AIDatabase2.AIDBPath*/0);
 
     static void OnPlayModeChanged(PlayModeStateChange playModeStateChange)
     {

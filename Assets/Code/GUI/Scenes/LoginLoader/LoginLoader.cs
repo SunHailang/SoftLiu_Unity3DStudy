@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using TMPro;
 using System.Text;
 using UnityEngine.Networking;
-using System.Net;
-using System.IO;
 using UnityEngine.UI;
 using SoftLiu.Utilities;
-using SoftLiu.Plugins.Native;
-using SoftLiu.SceneManagers;
-using SoftLiu.Authentication;
-using static TMPro.TMP_Dropdown;
 using SoftLiu.Servers;
 
 public class LoginLoader : MonoBehaviour
@@ -20,9 +13,9 @@ public class LoginLoader : MonoBehaviour
     [SerializeField]
     private RectTransform m_loginTransform = null;
     [SerializeField]
-    private TMP_InputField m_inputFieldUserName = null;
+    private InputField m_inputFieldUserName = null;
     [SerializeField]
-    private TMP_InputField m_inputFieldUserPassword = null;    
+    private InputField m_inputFieldUserPassword = null;    
     [SerializeField]
     private Toggle m_toggleTourist = null;
 
@@ -30,7 +23,7 @@ public class LoginLoader : MonoBehaviour
     [SerializeField]
     private GameObject m_serverDataObj = null;
     [SerializeField]
-    private TMP_Dropdown m_dropdownServer = null;
+    private Dropdown m_dropdownServer = null;
     [SerializeField]
     private GameObject m_btnLinkServer = null;
 
@@ -54,7 +47,7 @@ public class LoginLoader : MonoBehaviour
             List<ServerSocketData> serverList = GameDataManager.Instance.gameDB.GetItems<ServerSocketData>((data) => { return data.Type == "TCP"; });
             for (int i = 0; i < serverList.Count; i++)
             {
-                m_dropdownServer.options.Add(new OptionData(serverList[i].Name));
+                m_dropdownServer.options.Add(new Dropdown.OptionData(serverList[i].Name));
                 m_serverDataDic.Add(i, serverList[i]);
             }
         }

@@ -25,15 +25,15 @@ public class OutlineEx : BaseMeshEffect
             {
 #if UNITY_EDITOR
 
-                var texMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Assets/Scenes/ShaderTest/OutlineMat.mat");
-                if (texMaterial != null)
-                {
-                    base.graphic.material = texMaterial;
-                }
-                else
-                {
-                    Debug.LogError("没有找到材质OutlineMat.mat");
-                }
+                // var texMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Assets/Scenes/ShaderTest/OutlineMat.mat");
+                // if (texMaterial != null)
+                // {
+                //     base.graphic.material = texMaterial;
+                // }
+                // else
+                // {
+                //     Debug.LogError("没有找到材质OutlineMat.mat");
+                // }
 #else
                     var shader = Shader.Find("TSF Shaders/UI/OutlineEx");
                     base.graphic.material = new Material(shader);
@@ -83,15 +83,15 @@ public class OutlineEx : BaseMeshEffect
         {
             if (base.graphic.material.shader.name != "TSF Shaders/UI/OutlineEx")
             {
-                var texMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Assets/OutlineMat.mat");
-                if (texMaterial != null)
-                {
-                    base.graphic.material = texMaterial;
-                }
-                else
-                {
-                    Debug.LogError("没有找到材质OutlineMat.mat");
-                }
+                // var texMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Assets/OutlineMat.mat");
+                // if (texMaterial != null)
+                // {
+                //     base.graphic.material = texMaterial;
+                // }
+                // else
+                // {
+                //     Debug.LogError("没有找到材质OutlineMat.mat");
+                // }
                 //var shader = Shader.Find("TSF Shaders/UI/OutlineEx");
                 //base.graphic.material = new Material(shader);
             }
@@ -205,8 +205,8 @@ public class OutlineEx : BaseMeshEffect
         pVertex.position = pos;
         // UV
         var uv = pVertex.uv0;
-        uv += pUVX / pTriangleX.magnitude * posXOffset * (Vector2.Dot(pTriangleX, Vector2.right) > 0 ? 1 : -1);
-        uv += pUVY / pTriangleY.magnitude * posYOffset * (Vector2.Dot(pTriangleY, Vector2.up) > 0 ? 1 : -1);
+        // uv += pUVX / pTriangleX.magnitude * posXOffset * (Vector2.Dot(pTriangleX, Vector2.right) > 0 ? 1 : -1);
+        // uv += pUVY / pTriangleY.magnitude * posYOffset * (Vector2.Dot(pTriangleY, Vector2.up) > 0 ? 1 : -1);
         pVertex.uv0 = uv;
 
         pVertex.uv1 = pUVOriginMin;     //uv1 uv2 可用  tangent  normal 在缩放状况 会有问题

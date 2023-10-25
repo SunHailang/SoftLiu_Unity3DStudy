@@ -114,44 +114,44 @@ namespace SoftLiu.AssetBundles
 
             Debug.Log("Enabling " + assetBundleName);
             //first, wipe any assets in that bundle
-            UnityEditor.AssetDatabase.RemoveAssetBundleName(assetBundleName, true);
-            List<UnityEditor.EditorBuildSettingsScene> SceneList = new List<UnityEditor.EditorBuildSettingsScene>(UnityEditor.EditorBuildSettings.scenes);
-            for (int i = 0; i < assetPaths.Length; i++)
-            {
-                //assign to bundle
-                UnityEditor.AssetImporter.GetAtPath(assetPaths[i]).assetBundleName = assetBundleName;
-
-                //go through scene build list, remove the relevant scene
-                foreach (UnityEditor.EditorBuildSettingsScene scene in SceneList)
-                {
-                    if (scene.path == assetPaths[i])
-                    {
-                        scene.enabled = false;
-                        break;
-                    }
-                }
-            }
-            UnityEditor.EditorBuildSettings.scenes = SceneList.ToArray();
+            // AssetDatabase.RemoveAssetBundleName(assetBundleName, true);
+            // List<UnityEditor.EditorBuildSettingsScene> SceneList = new List<UnityEditor.EditorBuildSettingsScene>(UnityEditor.EditorBuildSettings.scenes);
+            // for (int i = 0; i < assetPaths.Length; i++)
+            // {
+            //     //assign to bundle
+            //     UnityEditor.AssetImporter.GetAtPath(assetPaths[i]).assetBundleName = assetBundleName;
+            //
+            //     //go through scene build list, remove the relevant scene
+            //     foreach (UnityEditor.EditorBuildSettingsScene scene in SceneList)
+            //     {
+            //         if (scene.path == assetPaths[i])
+            //         {
+            //             scene.enabled = false;
+            //             break;
+            //         }
+            //     }
+            // }
+            // UnityEditor.EditorBuildSettings.scenes = SceneList.ToArray();
 #endif
         }
 
         public override void DisableBundle()
         {
 #if UNITY_EDITOR
-            UnityEditor.AssetDatabase.RemoveAssetBundleName(assetBundleName, true);
-            List<UnityEditor.EditorBuildSettingsScene> SceneList = new List<UnityEditor.EditorBuildSettingsScene>(UnityEditor.EditorBuildSettings.scenes);
-            for (int i = 0; i < assetPaths.Length; i++)
-            {
-                //go through scene build list, remove the relevant scene
-                foreach (UnityEditor.EditorBuildSettingsScene scene in SceneList)
-                {
-                    if (scene.path == assetPaths[i])
-                    {
-                        scene.enabled = true;
-                    }
-                }
-            }
-            UnityEditor.EditorBuildSettings.scenes = SceneList.ToArray();
+            // UnityEditor.AssetDatabase.RemoveAssetBundleName(assetBundleName, true);
+            // List<UnityEditor.EditorBuildSettingsScene> SceneList = new List<UnityEditor.EditorBuildSettingsScene>(UnityEditor.EditorBuildSettings.scenes);
+            // for (int i = 0; i < assetPaths.Length; i++)
+            // {
+            //     //go through scene build list, remove the relevant scene
+            //     foreach (UnityEditor.EditorBuildSettingsScene scene in SceneList)
+            //     {
+            //         if (scene.path == assetPaths[i])
+            //         {
+            //             scene.enabled = true;
+            //         }
+            //     }
+            // }
+            // UnityEditor.EditorBuildSettings.scenes = SceneList.ToArray();
 #endif
         }
     }

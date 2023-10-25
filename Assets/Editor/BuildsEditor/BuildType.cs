@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-
+﻿
 namespace SoftLiu.Build
 {
     public enum SoftLiuBuildTarget
@@ -14,13 +10,13 @@ namespace SoftLiu.Build
 
     public static class SoftLiuBuildTargetResolver
     {
-        public static SoftLiuBuildTarget Resolve(BuildTarget target)
+        public static SoftLiuBuildTarget Resolve(UnityEditor.BuildTarget target)
         {
             switch (target)
             {
-                case BuildTarget.iOS:
+                case UnityEditor.BuildTarget.iOS:
                     return SoftLiuBuildTarget.iOS;
-                case BuildTarget.Android:
+                case UnityEditor.BuildTarget.Android:
                     return SoftLiuBuildTarget.Android;
             }
             return SoftLiuBuildTarget.Unknown;

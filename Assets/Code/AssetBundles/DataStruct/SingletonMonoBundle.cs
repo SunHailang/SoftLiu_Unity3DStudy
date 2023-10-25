@@ -26,19 +26,19 @@ namespace SoftLiu.AssetBundles
         {
 #if UNITY_EDITOR
             //first, wipe any assets in that bundle
-            UnityEditor.AssetDatabase.RemoveAssetBundleName(assetBundleName, true);
-            for (int i = 0; i < assetPaths.Length; i++)
-            {
-                //assign to bundle
-                UnityEditor.AssetImporter.GetAtPath(assetPaths[i]).assetBundleName = assetBundleName;
-            }
+            // UnityEditor.AssetDatabase.RemoveAssetBundleName(assetBundleName, true);
+            // for (int i = 0; i < assetPaths.Length; i++)
+            // {
+            //     //assign to bundle
+            //     UnityEditor.AssetImporter.GetAtPath(assetPaths[i]).assetBundleName = assetBundleName;
+            // }
 #endif
         }
 
         public override void DisableBundle()
         {
 #if UNITY_EDITOR
-            UnityEditor.AssetDatabase.RemoveAssetBundleName(assetBundleName, true);
+            // UnityEditor.AssetDatabase.RemoveAssetBundleName(assetBundleName, true);
 #endif
         }
 

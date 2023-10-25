@@ -15,7 +15,7 @@ public class SoftLiuEditor
             string gameTextPath = Path.Combine(Application.dataPath, "Resources/Localization_Chinese.csv");
             if (File.Exists(path))
             {
-                UnityEngine.Debug.Log("strat");
+                UnityEngine.Debug.Log("start");
                 bool overwrite = false;
 
                 string str = File.ReadAllText(path);

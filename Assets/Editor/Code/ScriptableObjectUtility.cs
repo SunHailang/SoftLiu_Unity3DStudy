@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,6 +21,7 @@ public static class ScriptableObjectUtility
 
             assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/New " + typeof(T).ToString() + ".asset");
         }
+
         AssetDatabase.CreateAsset(asset, assetPathAndName);
 
         string assetName = typeof(T).ToString();

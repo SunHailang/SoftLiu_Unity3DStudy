@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEngine;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -61,7 +62,8 @@ public class GameDB
             }
         }
         return false;
-    }
+    }
+
     public bool TryGetItem<T>(string key, out T data) where T : ObjectData
     {
         System.Type type = typeof(T);
@@ -150,8 +152,10 @@ public class GameDB
         List<ObjectData> allItems = GameData.InstantiateItems(rawData);
         foreach (ObjectData obj in allItems)
         {
-            System.Type type = obj.GetType();
-            Dictionary<string, ObjectData> dict;
+            System.Type type = obj.GetType();
+
+            Dictionary<string, ObjectData> dict;
+
             if (!m_byTypeAndKeys.TryGetValue(type, out dict))
             {
                 continue;
@@ -276,19 +280,21 @@ public class GameDB
             return System.Convert.ChangeType(System.Enum.Parse(type, value as string), type);
         else
             return System.Convert.ChangeType(value, type);
-    }
-
+    }
+
+
+
     public static void GetGameDBInEditor(ref GameDB m_gameDB)
     {
 #if UNITY_EDITOR
         if (m_gameDB == null)
         {
-            GameData gameData = ScriptableObject.CreateInstance<GameData>();
-            TextAsset ta = UnityEditor.AssetDatabase.LoadAssetAtPath(GameDataManager.GameDBJsonPath, typeof(TextAsset)) as TextAsset;
-            gameData.Import(ta.text);
-            Resources.UnloadAsset(ta);
-            m_gameDB = new GameDB();
-            m_gameDB.Initialize(gameData.GetAllItems());
+            // GameData gameData = ScriptableObject.CreateInstance<GameData>();
+            // TextAsset ta = UnityEditor.AssetDatabase.LoadAssetAtPath(GameDataManager.GameDBJsonPath, typeof(TextAsset)) as TextAsset;
+            // gameData.Import(ta.text);
+            // Resources.UnloadAsset(ta);
+            // m_gameDB = new GameDB();
+            // m_gameDB.Initialize(gameData.GetAllItems());
         }
 #endif
     }

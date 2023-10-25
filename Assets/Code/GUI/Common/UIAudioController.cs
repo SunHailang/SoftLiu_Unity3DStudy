@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIAudioController : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI m_sliderBGAudioProgress = null;
+    private Text m_sliderBGAudioProgress = null;
     [SerializeField]
     private Slider m_sliderBGAudio = null;
     [SerializeField]
-    private TextMeshProUGUI m_sliderEffectAudioProgress = null;
+    private Text m_sliderEffectAudioProgress = null;
     [SerializeField]
     private Slider m_sliderEffectAudio = null;
     [SerializeField]

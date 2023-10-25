@@ -90,7 +90,7 @@ namespace SoftLiu
                 if (m_ignoreList.Contains(ignoreName) == false)
                 {
                     int option = EditorUtility.DisplayDialogComplex("Fatal!", assertMessage, "Open File", "Stop", "Ignore All");
-
+                    
                     if (option == 0)
                     {
                         UnityEditorInternal.InternalEditorUtility.OpenFileAtLineExternal(frame.GetFileName(), frame.GetFileLineNumber());
