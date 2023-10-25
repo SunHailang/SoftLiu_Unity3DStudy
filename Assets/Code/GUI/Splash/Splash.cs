@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using SoftLiu.Utilities;
 using SoftLiu.Servers;
 using System;
-using TMPro;
 using SoftLiu.Localization;
 using SoftLiu.SceneManagers;
 
@@ -13,7 +13,7 @@ using SoftLiu.SceneManagers;
 public class Splash : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI m_text = null;
+    private Text m_text = null;
 
     private void Awake()
     {
@@ -37,9 +37,6 @@ public class Splash : MonoBehaviour
         {
             if (string.IsNullOrEmpty(response.error))
             {
-                Debug.Log(response.response.unixTimestamp);
-                Debug.Log(Time.unscaledTime);
-
                 //SceneManager.LoadScene("Common3D", LoadSceneMode.Additive);
                 bool result = SceneManager.Instance.LoadSceneAsync("Common3D", (data) =>
                 {

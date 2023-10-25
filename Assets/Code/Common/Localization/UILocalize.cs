@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using SoftLiu;
+using UnityEngine.UI;
 
 namespace SoftLiu.Localization
 {
-    [RequireComponent(typeof(TextMeshProUGUI))]
+    [RequireComponent(typeof(Text))]
     public class UILocalize : MonoBehaviour
     {
         [SerializeField]
@@ -16,11 +16,11 @@ namespace SoftLiu.Localization
 
         private object[] m_params = null;
 
-        private TextMeshProUGUI m_text = null;
+        private Text m_text = null;
 
         private void Awake()
         {
-            m_text = gameObject.GetComponent<TextMeshProUGUI>();
+            m_text = gameObject.GetComponent<Text>();
             Assert.Fatal(m_text != null, string.Format("name: {0} UILocalize TextMeshProUGUI is null.", gameObject.name));
         }
 
@@ -50,11 +50,11 @@ namespace SoftLiu.Localization
             string value = Localization.Instance.Get(m_afterKey);
             if (mParams == null)
             {
-                m_text.SetText(value);
+                //m_text.SetText(value);
             }
             else
             {
-                m_text.SetText(string.Format(value, mParams));
+                //m_text.SetText(string.Format(value, mParams));
             }
         }
     }

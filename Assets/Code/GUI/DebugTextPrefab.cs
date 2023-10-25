@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class DebugTextPrefab : MonoBehaviour
 {
-    private TextMeshProUGUI m_text = null;
+    private Text m_text = null;
 
     private float m_moveTime = 3f;
 
@@ -19,7 +19,7 @@ public class DebugTextPrefab : MonoBehaviour
 
     private void Awake()
     {
-        m_text = GetComponent<TextMeshProUGUI>();
+        m_text = GetComponent<Text>();
         SoftLiu.Assert.Fatal(m_text != null, "DebugTextPrefab m_text is null.");
         m_point = new Vector3(transform.localPosition.x, transform.localPosition.y + m_moveDis, transform.localPosition.z);
     }
@@ -28,7 +28,7 @@ public class DebugTextPrefab : MonoBehaviour
     {
         m_scale = scale;
         m_text.color = color;
-        m_text.SetText(text);
+        //m_text.SetText(text);
     }
 
     private void Update()
