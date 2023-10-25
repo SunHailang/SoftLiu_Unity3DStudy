@@ -5,10 +5,11 @@ using TMPro;
 using SoftLiu;
 using SoftLiu.Event;
 using System;
+using UnityEngine.UI;
 
 namespace SoftLiu.Localization
 {
-    [RequireComponent(typeof(TextMeshProUGUI))]
+    [RequireComponent(typeof(Text))]
     public class UILocalize : MonoBehaviour
     {
         [SerializeField]
@@ -18,15 +19,15 @@ namespace SoftLiu.Localization
 
         private object[] m_params = null;
 
-        private TextMeshProUGUI m_text = null;
+        private Text m_text = null;
 
         private void Awake()
         {
             //Register
             EventManager<Events>.Instance.RegisterEvent(Events.ChangedLanguage, OnChangedLanguage);
 
-            m_text = gameObject.GetComponent<TextMeshProUGUI>();
-            Assert.Fatal(m_text != null, string.Format("name: {0} UILocalize TextMeshProUGUI is null.", gameObject.name));
+            m_text = gameObject.GetComponent<Text>();
+            Assert.Fatal(m_text != null, string.Format("name: {0} UILocalize Text is null.", gameObject.name));
         }
 
         private void OnChangedLanguage(Events eventType, object[] mParams)
