@@ -11,7 +11,7 @@ namespace SoftLiu.Utilities
         /// <returns>当前时间减去 1970-01-01 00.00.00 得到的秒数</returns>
         public long GetTimeStamp(DateTime dateTime)
         {
-            DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));
+            DateTime startTime = TimeZoneInfo.ConvertTimeFromUtc(new System.DateTime(1970, 1, 1, 0, 0, 0, 0), TimeZoneInfo.Local);
             long stamp = (long)System.Math.Round((dateTime - startTime).TotalSeconds, MidpointRounding.AwayFromZero);
             return stamp;
         }
@@ -23,7 +23,7 @@ namespace SoftLiu.Utilities
         /// <returns>date time</returns>  
         public DateTime GetDateTime(string timeStamp)
         {
-            DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            DateTime dtStart = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(1970, 1, 1), TimeZoneInfo.Local);
             long lTime = long.Parse(timeStamp + "0000000");
             TimeSpan toNow = new TimeSpan(lTime);
             return dtStart.Add(toNow);

@@ -1,12 +1,13 @@
 ##################
 *.csproj
 *.sln
+.vsconfig
 
 #####################
 /Library/
 /Builds/
-.vs/
-.vscode/
+/.vs/
+/.vscode/
 /Temp/
 obj/
 /Logs/

@@ -43,7 +43,7 @@ namespace SoftLiu.SceneManagers
                     return true;
                 }
             }
-            return false;
+            //return false;
         }
 
         public void LoadScene(string name, UnityEngine.SceneManagement.LoadSceneMode mode)
